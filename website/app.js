@@ -46,7 +46,7 @@ analyzeButton.addEventListener("click", async function () {
         console.log("Sending request to Flask API...");
 
         const response = await fetch(
-            "http://127.0.0.1:5000/predict",
+           const API_URL = "https://truthlensai-re6x.onrender.com/predict";
             {
                 method: "POST",
 
