@@ -1,6 +1,8 @@
 
 console.log("TRUTHLENS AI APP.JS LOADED");
 
+const API_URL = "https://truthlensai-re6x.onrender.com/predict";
+
 const newsText = document.getElementById("newsText");
 const analyzeButton = document.getElementById("analyzeButton");
 const characterCount = document.getElementById("characterCount");
@@ -46,7 +48,7 @@ analyzeButton.addEventListener("click", async function () {
         console.log("Sending request to Flask API...");
 
         const response = await fetch(
-           const API_URL = "https://truthlensai-re6x.onrender.com/predict";
+            API_URL,
             {
                 method: "POST",
 
@@ -89,7 +91,7 @@ analyzeButton.addEventListener("click", async function () {
 
         showError(
             "Could not connect to TruthLens AI API. " +
-            "Please make sure Flask is running."
+            "Please try again in a moment."
         );
 
     } finally {
@@ -196,4 +198,5 @@ function hideError() {
 
     errorMessage.classList.add("hidden");
 }
+
 
