@@ -1,27 +1,20 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
           content="TruthLens AI - AI-powered fake news detection system">
 
     <title>TruthLens AI</title>
 
-    <link rel="stylesheet"
-          href="./style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-
-    <!-- =========================
-         NAVBAR
-    ========================== -->
 
     <header class="navbar">
 
@@ -37,13 +30,7 @@
     </header>
 
 
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
     <main>
-
-        <!-- HERO SECTION -->
 
         <section class="hero">
 
@@ -68,18 +55,12 @@
         </section>
 
 
-        <!-- =========================
-             ANALYZER
-        ========================== -->
-
         <section class="analyzer">
 
             <div class="analyzer-header">
 
                 <div>
-                    <h2>
-                        News Analyzer
-                    </h2>
+                    <h2>News Analyzer</h2>
 
                     <p>
                         Paste the complete article text for analysis.
@@ -88,8 +69,6 @@
 
             </div>
 
-
-            <!-- TEXTAREA -->
 
             <div class="input-area">
 
@@ -109,15 +88,10 @@
             </div>
 
 
-            <!-- ERROR -->
-
-            <div
-                id="errorMessage"
-                class="error-message hidden">
+            <div id="errorMessage"
+                 class="error-message hidden">
             </div>
 
-
-            <!-- BUTTON -->
 
             <button
                 id="analyzeButton"
@@ -134,11 +108,8 @@
             </button>
 
 
-            <!-- LOADING -->
-
-            <div
-                id="loading"
-                class="loading hidden">
+            <div id="loading"
+                 class="loading hidden">
 
                 <div class="spinner"></div>
 
@@ -149,19 +120,13 @@
             </div>
 
 
-            <!-- =========================
-                 RESULT CARD
-            ========================== -->
-
-            <div
-                id="resultCard"
-                class="result-card hidden">
+            <div id="resultCard"
+                 class="result-card hidden">
 
                 <div class="result-top">
 
-                    <div
-                        id="resultIcon"
-                        class="result-icon">
+                    <div id="resultIcon"
+                         class="result-icon">
                         ✓
                     </div>
 
@@ -180,8 +145,6 @@
                 </div>
 
 
-                <!-- CONFIDENCE -->
-
                 <div class="confidence-section">
 
                     <div class="confidence-header">
@@ -198,9 +161,8 @@
 
                     <div class="confidence-bar">
 
-                        <div
-                            id="confidenceFill"
-                            class="confidence-fill">
+                        <div id="confidenceFill"
+                             class="confidence-fill">
                         </div>
 
                     </div>
@@ -208,19 +170,14 @@
                 </div>
 
 
-                <!-- WARNING -->
-
-                <div
-                    id="warningMessage"
-                    class="warning-message">
+                <div id="warningMessage"
+                     class="warning-message">
 
                     ⚠️ This is an AI model prediction,
                     not a guarantee that the article is true or false.
 
                 </div>
 
-
-                <!-- RESET -->
 
                 <button
                     id="resetButton"
@@ -234,10 +191,6 @@
 
         </section>
 
-
-        <!-- =========================
-             INFO CARDS
-        ========================== -->
 
         <section class="info">
 
@@ -299,10 +252,6 @@
     </main>
 
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
     <footer class="footer">
 
         <p>
@@ -316,13 +265,9 @@
     </footer>
 
 
-    <!-- IMPORTANT:
-         Use app.js instead of script.js
-    -->
-
     <script src="./app.js"></script>
 
 </body>
 
 </html>
-```
+
