@@ -1,0 +1,328 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="TruthLens AI - AI-powered fake news detection system">
+
+    <title>TruthLens AI</title>
+
+    <link rel="stylesheet"
+          href="./style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            TruthLens AI
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            AI System Online
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main>
+
+        <!-- HERO SECTION -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <p class="eyebrow">
+                    AI-POWERED NEWS ANALYSIS
+                </p>
+
+                <h1>
+                    Detect Fake News<br>
+                    <span>with AI.</span>
+                </h1>
+
+                <p class="subtitle">
+                    Paste a news article below and let TruthLens AI
+                    analyze its content using a machine learning model.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ANALYZER
+        ========================== -->
+
+        <section class="analyzer">
+
+            <div class="analyzer-header">
+
+                <div>
+                    <h2>
+                        News Analyzer
+                    </h2>
+
+                    <p>
+                        Paste the complete article text for analysis.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- TEXTAREA -->
+
+            <div class="input-area">
+
+                <textarea
+                    id="newsText"
+                    placeholder="Paste a news article here..."
+                    spellcheck="false"></textarea>
+
+                <div class="input-footer">
+
+                    <span id="characterCount">
+                        0 characters
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="errorMessage"
+                class="error-message hidden">
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                id="analyzeButton"
+                class="analyze-button">
+
+                <span>
+                    Analyze Article
+                </span>
+
+                <span class="button-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <!-- LOADING -->
+
+            <div
+                id="loading"
+                class="loading hidden">
+
+                <div class="spinner"></div>
+
+                <p>
+                    Analyzing article with AI...
+                </p>
+
+            </div>
+
+
+            <!-- =========================
+                 RESULT CARD
+            ========================== -->
+
+            <div
+                id="resultCard"
+                class="result-card hidden">
+
+                <div class="result-top">
+
+                    <div
+                        id="resultIcon"
+                        class="result-icon">
+                        ✓
+                    </div>
+
+                    <div class="result-heading">
+
+                        <p class="result-label">
+                            AI ANALYSIS RESULT
+                        </p>
+
+                        <h3 id="resultText">
+                            CREDIBLE
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIDENCE -->
+
+                <div class="confidence-section">
+
+                    <div class="confidence-header">
+
+                        <span>
+                            Model Confidence
+                        </span>
+
+                        <strong id="confidenceText">
+                            0%
+                        </strong>
+
+                    </div>
+
+                    <div class="confidence-bar">
+
+                        <div
+                            id="confidenceFill"
+                            class="confidence-fill">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- WARNING -->
+
+                <div
+                    id="warningMessage"
+                    class="warning-message">
+
+                    ⚠️ This is an AI model prediction,
+                    not a guarantee that the article is true or false.
+
+                </div>
+
+
+                <!-- RESET -->
+
+                <button
+                    id="resetButton"
+                    class="reset-button">
+
+                    Analyze Another Article
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             INFO CARDS
+        ========================== -->
+
+        <section class="info">
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    AI
+                </div>
+
+                <h3>
+                    Machine Learning
+                </h3>
+
+                <p>
+                    TruthLens AI uses a trained machine learning
+                    model to analyze the text of news articles.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    %
+                </div>
+
+                <h3>
+                    Confidence Score
+                </h3>
+
+                <p>
+                    The system provides a confidence percentage
+                    alongside every prediction.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    !
+                </div>
+
+                <h3>
+                    Use Carefully
+                </h3>
+
+                <p>
+                    AI predictions can be wrong. Always verify
+                    important information using reliable sources.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 TruthLens AI
+        </p>
+
+        <p>
+            AI-powered fake news detection project
+        </p>
+
+    </footer>
+
+
+    <!-- IMPORTANT:
+         Use app.js instead of script.js
+    -->
+
+    <script src="./app.js"></script>
+
+</body>
+
+</html>
+```
