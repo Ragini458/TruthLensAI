@@ -1,546 +1,366 @@
-console.log("TRUTHLENS AI APP.JS LOADED");
-
 const API_URL = "https://truthlensai-re6x.onrender.com/predict";
 
 const newsText = document.getElementById("newsText");
-const analyzeButton = document.getElementById("analyzeButton");
 const characterCount = document.getElementById("characterCount");
-
-const loading = document.getElementById("loading");
-const resultCard = document.getElementById("resultCard");
 const errorMessage = document.getElementById("errorMessage");
+const analyzeButton = document.getElementById("analyzeButton");
+const loading = document.getElementById("loading");
 
+const resultCard = document.getElementById("resultCard");
+const resultIcon = document.getElementById("resultIcon");
 const resultText = document.getElementById("resultText");
 const confidenceText = document.getElementById("confidenceText");
-const resultIcon = document.getElementById("resultIcon");
 const confidenceFill = document.getElementById("confidenceFill");
-
-const resetButton = document.getElementById("resetButton");
 const warningMessage = document.getElementById("warningMessage");
+const resetButton = document.getElementById("resetButton");
 
-const explanationTitle =
-    document.getElementById("explanationTitle");
+const explanationSection = document.getElementById("explanationSection");
+const explanationTitle = document.getElementById("explanationTitle");
+const explanationText = document.getElementById("explanationText");
+const verificationText = document.getElementById("verificationText");
 
-const explanationText =
-    document.getElementById("explanationText");
-
-const verificationText =
-    document.getElementById("verificationText");
-
-const claimsList =
-    document.getElementById("claimsList");
+const claimsSection = document.getElementById("claimsSection");
+const claimsList = document.getElementById("claimsList");
 
 
-/* =========================
+/* ================================
    CHARACTER COUNT
-========================= */
+================================ */
 
 newsText.addEventListener("input", function () {
-
-    characterCount.textContent =
-        newsText.value.length + " characters";
-
+    characterCount.textContent = `${newsText.value.length} characters`;
+    errorMessage.textContent = "";
 });
 
 
-/* =========================
+/* ================================
    ANALYZE ARTICLE
-========================= */
+================================ */
 
-analyzeButton.addEventListener("click", async function () {
+analyzeButton.addEventListener("click", analyzeArticle);
 
-    console.log("Analyze button clicked!");
+async function analyzeArticle() {
+    const articleText = newsText.value.trim();
 
-    const text = newsText.value.trim();
-
-
-    if (text.length === 0) {
-
-        showError("Please paste a news article first.");
-
+    if (!articleText) {
+        errorMessage.textContent = "Please paste a news article first.";
+        newsText.focus();
         return;
     }
 
+    if (articleText.length < 30) {
+        errorMessage.textContent =
+            "Please enter a longer article for better analysis.";
+        newsText.focus();
+        return;
+    }
 
-    hideError();
-
-    resultCard.classList.add("hidden");
-
-    loading.classList.remove("hidden");
+    errorMessage.textContent = "";
 
     analyzeButton.disabled = true;
-
+    loading.style.display = "block";
+    resultCard.style.display = "none";
+    explanationSection.style.display = "none";
+    claimsSection.style.display = "none";
 
     try {
-
-        console.log("Sending request to Flask API...");
-
-
         const response = await fetch(
             API_URL,
             {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json"
                 },
-
                 body: JSON.stringify({
-                    text: text
+                    text: articleText
                 })
             }
         );
 
-
-        console.log(
-            "Flask response status:",
-            response.status
-        );
-
+        if (!response.ok) {
+            throw new Error("Server error");
+        }
 
         const data = await response.json();
 
-
-        console.log(
-            "Flask response:",
-            data
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.error || "API request failed."
-            );
-
-        }
-
-
-        showResult(data, text);
-
+        showResult(data, articleText);
 
     } catch (error) {
+        console.error("Analysis error:", error);
 
-        console.error(
-            "TruthLens AI Error:",
-            error
-        );
-
-
-        showError(
-            "Could not connect to TruthLens AI API. " +
-            "Please try again in a moment."
-        );
-
-
-    } finally {
-
-        loading.classList.add("hidden");
-
-        analyzeButton.disabled = false;
-
+        errorMessage.textContent =
+            "Unable to connect to the TruthLens AI server. Please try again.";
     }
 
-});
+    analyzeButton.disabled = false;
+    loading.style.display = "none";
+}
 
 
-/* =========================
+/* ================================
    SHOW RESULT
-========================= */
+================================ */
 
 function showResult(data, articleText) {
+    resultCard.style.display = "block";
 
-    resultCard.classList.remove("hidden");
+    const confidence = Number(data.confidence);
 
+    confidenceText.textContent = `${confidence.toFixed(2)}%`;
 
-    const confidence =
-        Number(data.confidence);
-
-
-    resultText.textContent =
-        data.result;
-
-
-    confidenceText.textContent =
-        confidence + "%";
-
-
-    confidenceFill.style.width =
-        confidence + "%";
-
-
-    /*
-     * FAKE RESULT
-     */
+    confidenceFill.style.width = `${Math.min(confidence, 100)}%`;
 
     if (data.result === "FAKE") {
-
         resultIcon.textContent = "!";
+        resultText.textContent = "FAKE";
 
-        resultIcon.style.background =
-            "#d64545";
-
-        confidenceFill.style.background =
-            "#d64545";
-
-        resultCard.style.background =
-            "#fff7f7";
-
-        resultCard.style.borderColor =
-            "#ffdcdc";
-
+        explanationSection.style.display = "block";
 
         explanationTitle.textContent =
             "Why the model flagged this";
 
-
         explanationText.textContent =
-            "The machine learning model found " +
-            "language patterns in this article that " +
-            "are associated with articles labeled as " +
-            "fake in its training data.";
-
+            "The machine learning model found language patterns in this article that are associated with articles labeled as fake in its training data.";
 
         verificationText.textContent =
-            "Check the main claims against official " +
-            "sources, established news organizations, " +
-            "and other independent sources before " +
-            "treating the information as reliable.";
+            "Check the main claims against official sources, established news organizations, and other independent sources before treating the information as reliable.";
 
-    }
-
-
-    /*
-     * CREDIBLE RESULT
-     */
-
-    else {
-
+    } else {
         resultIcon.textContent = "✓";
+        resultText.textContent = "CREDIBLE";
 
-        resultIcon.style.background =
-            "#4056c6";
-
-        confidenceFill.style.background =
-            "#4056c6";
-
-        resultCard.style.background =
-            "#f7f9ff";
-
-        resultCard.style.borderColor =
-            "#e0e5fa";
-
+        explanationSection.style.display = "block";
 
         explanationTitle.textContent =
-            "Why the model gave this result";
-
+            "Why the model classified this";
 
         explanationText.textContent =
-            "The machine learning model found " +
-            "language patterns that are more similar " +
-            "to articles labeled as credible in its " +
-            "training data.";
-
+            "The machine learning model found language patterns in this article that are associated with articles labeled as credible in its training data.";
 
         verificationText.textContent =
-            "A credible prediction does not prove that " +
-            "every claim is correct. For important news, " +
-            "compare the information with reliable " +
-            "independent sources.";
-
+            "A credible prediction does not prove that every statement in the article is true. Important claims should still be verified using reliable sources.";
     }
 
 
-    /*
-     * CONFIDENCE WARNING
-     */
+    /* ================================
+       CONFIDENCE WARNING
+    ================================ */
 
     if (confidence < 60) {
-
         warningMessage.textContent =
-            "⚠️ Low-confidence prediction. " +
-            "The model is not strongly confident, " +
-            "so this result should be interpreted carefully.";
-
-    }
-
-    else if (confidence < 80) {
-
+            "⚠️ Low-confidence prediction. The model is not strongly confident, so this result should be interpreted carefully.";
+    } else if (confidence < 80) {
         warningMessage.textContent =
-            "⚠️ Moderate-confidence prediction. " +
-            "Use the result as an indicator and " +
-            "verify important claims independently.";
-
-    }
-
-    else {
-
+            "⚠️ Moderate-confidence prediction. Consider checking the key claims before relying on this result.";
+    } else {
         warningMessage.textContent =
-            "ℹ️ Higher model confidence, but this is " +
-            "still an AI prediction and not a guarantee " +
-            "that the article is true or false.";
-
+            "ℹ️ Higher model confidence, but this prediction is not a guarantee of truth or falsehood.";
     }
 
 
-    /*
-     * GENERATE KEY CLAIMS
-     */
+    /* ================================
+       KEY CLAIMS
+    ================================ */
 
     generateKeyClaims(articleText);
 
+    resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }
 
 
-/* =========================
-   KEY CLAIM EXTRACTION
-========================= */
+/* ================================
+   GENERATE KEY CLAIMS
+================================ */
 
 function generateKeyClaims(articleText) {
-
     claimsList.innerHTML = "";
 
+    const cleanedText = articleText
+        .replace(/\s+/g, " ")
+        .trim();
 
-    /*
-     * Split article into sentences.
-     */
+    const sentences = cleanedText
+        .split(/(?<=[.!?])\s+/)
+        .map(sentence => sentence.trim())
+        .filter(sentence => sentence.length > 30);
 
-    const sentences =
-        articleText
-            .replace(/\s+/g, " ")
-            .split(/(?<=[.!?])\s+/)
-            .map(sentence => sentence.trim())
-            .filter(sentence => sentence.length > 30);
+    const claimWords = [
+        "announced",
+        "said",
+        "according",
+        "reported",
+        "officials",
+        "government",
+        "research",
+        "study",
+        "found",
+        "will",
+        "plans",
+        "confirmed",
+        "new",
+        "increase",
+        "decrease",
+        "expected",
+        "revealed"
+    ];
 
+    const scoredSentences = sentences.map(sentence => {
+        let score = 0;
 
-    /*
-     * Remove duplicate sentences.
-     */
+        const lowerSentence = sentence.toLowerCase();
 
-    const uniqueSentences =
-        [...new Set(sentences)];
+        if (sentence.length > 80) {
+            score += 2;
+        }
 
+        if (sentence.length > 140) {
+            score += 1;
+        }
 
-    /*
-     * Give each sentence a simple importance score.
-     */
-
-    const scoredSentences =
-        uniqueSentences.map(sentence => {
-
-            let score = 0;
-
-            const lower =
-                sentence.toLowerCase();
-
-
-            /*
-             * Longer statements often contain
-             * more information.
-             */
-
-            if (sentence.length > 80) {
-                score += 2;
-            }
-
-            if (sentence.length > 140) {
+        claimWords.forEach(word => {
+            if (lowerSentence.includes(word)) {
                 score += 1;
             }
+        });
+
+        return {
+            text: sentence,
+            score: score
+        };
+    });
 
 
-            /*
-             * Look for claim-related words.
-             */
+    const uniqueClaims = [];
 
-            const claimWords = [
-                "announced",
-                "said",
-                "according",
-                "reported",
-                "officials",
-                "government",
-                "research",
-                "study",
-                "found",
-                "will",
-                "plans",
-                "confirmed",
-                "new",
-                "increase",
-                "decrease",
-                "expected",
-                "revealed"
-            ];
-
-
-            claimWords.forEach(word => {
-
-                if (lower.includes(word)) {
-                    score += 1;
-                }
-
-            });
-
-
-            return {
-                sentence: sentence,
-                score: score
-            };
-
+    scoredSentences
+        .sort((a, b) => b.score - a.score)
+        .forEach(item => {
+            if (
+                !uniqueClaims.some(
+                    claim => claim.toLowerCase() === item.text.toLowerCase()
+                )
+            ) {
+                uniqueClaims.push(item.text);
+            }
         });
 
 
-    /*
-     * Sort by importance.
-     */
-
-    scoredSentences.sort(
-        (a, b) => b.score - a.score
-    );
+    const topClaims = uniqueClaims.slice(0, 5);
 
 
-    /*
-     * Show maximum 5 claims.
-     */
+    if (topClaims.length === 0) {
+        claimsList.innerHTML =
+            "<p>No clear key claims were detected. Try submitting a longer article.</p>";
 
-    const claims =
-        scoredSentences
-            .slice(0, 5)
-            .map(item => item.sentence);
-
-
-    /*
-     * If no suitable claims were found.
-     */
-
-    if (claims.length === 0) {
-
-        const fallback =
-            articleText.length > 180
-                ? articleText.substring(0, 180) + "..."
-                : articleText;
-
-
-        addClaim(fallback);
-
+        claimsSection.style.display = "block";
         return;
     }
 
 
-    /*
-     * Display claims.
-     */
+    topClaims.forEach((claim, index) => {
+        addClaim(claim, index + 1);
+    });
 
-    claims.forEach(
-        (claim, index) => {
-
-            addClaim(
-                claim,
-                index + 1
-            );
-
-        }
-    );
-
+    claimsSection.style.display = "block";
 }
 
 
-/* =========================
-   ADD CLAIM TO UI
-========================= */
+/* ================================
+   ADD CLAIM
+================================ */
 
 function addClaim(claim, number) {
+    const claimItem = document.createElement("div");
+    claimItem.className = "claim-item";
 
-    const claimItem =
-        document.createElement("div");
+    const claimNumber = document.createElement("div");
+    claimNumber.className = "claim-number";
+    claimNumber.textContent = number;
 
+    const claimContent = document.createElement("div");
+    claimContent.className = "claim-content";
 
-    claimItem.className =
-        "claim-item";
+    const claimText = document.createElement("p");
+    claimText.className = "claim-text";
+    claimText.textContent = claim;
 
+    const verifyButton = document.createElement("button");
+    verifyButton.className = "verify-claim-button";
+    verifyButton.type = "button";
+    verifyButton.textContent = "🔎 Verify This Claim";
 
-    const claimNumber =
-        document.createElement("span");
+    verifyButton.addEventListener("click", function () {
+        verifyClaim(claim, verifyButton);
+    });
 
+    claimContent.appendChild(claimText);
+    claimContent.appendChild(verifyButton);
 
-    claimNumber.className =
-        "claim-number";
+    claimItem.appendChild(claimNumber);
+    claimItem.appendChild(claimContent);
 
-
-    claimNumber.textContent =
-        number || "•";
-
-
-    const claimText =
-        document.createElement("p");
-
-
-    claimText.className =
-        "claim-text";
-
-
-    claimText.textContent =
-        claim;
-
-
-    claimItem.appendChild(
-        claimNumber
-    );
-
-
-    claimItem.appendChild(
-        claimText
-    );
-
-
-    claimsList.appendChild(
-        claimItem
-    );
-
+    claimsList.appendChild(claimItem);
 }
 
 
-/* =========================
+/* ================================
+   VERIFY CLAIM
+================================ */
+
+function verifyClaim(claim, button) {
+    const searchQuery =
+        `"${claim}" fact check`;
+
+    const searchUrl =
+        "https://www.google.com/search?q=" +
+        encodeURIComponent(searchQuery);
+
+    window.open(searchUrl, "_blank");
+
+    button.textContent = "✓ Search Opened";
+
+    setTimeout(() => {
+        button.textContent = "🔎 Verify This Claim";
+    }, 2000);
+}
+
+
+/* ================================
    RESET
-========================= */
+================================ */
 
-resetButton.addEventListener("click", function () {
+resetButton.addEventListener("click", resetAnalyzer);
 
+function resetAnalyzer() {
     newsText.value = "";
 
-    characterCount.textContent =
-        "0 characters";
+    characterCount.textContent = "0 characters";
 
-    resultCard.classList.add("hidden");
+    errorMessage.textContent = "";
 
-    confidenceFill.style.width =
-        "0%";
+    resultCard.style.display = "none";
+
+    explanationSection.style.display = "none";
+
+    claimsSection.style.display = "none";
 
     claimsList.innerHTML = "";
 
-    hideError();
+    confidenceFill.style.width = "0%";
+
+    warningMessage.textContent = "";
+
+    resultText.textContent = "";
+
+    confidenceText.textContent = "";
 
     newsText.focus();
 
-});
-
-
-/* =========================
-   ERROR FUNCTIONS
-========================= */
-
-function showError(message) {
-
-    errorMessage.textContent =
-        message;
-
-    errorMessage.classList.remove("hidden");
-
-}
-
-
-function hideError() {
-
-    errorMessage.classList.add("hidden");
-
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }

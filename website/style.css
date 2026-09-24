@@ -1,3 +1,7 @@
+/* =========================================
+   TRUTHLENS AI - MAIN STYLES
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,414 +10,403 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #f5f7fb;
-    color: #172033;
+    background: #f4f6fb;
+    color: #1f2937;
     line-height: 1.6;
 }
 
-.hidden {
-    display: none !important;
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+    background: #ffffff;
+    border-bottom: 1px solid #e3e7ef;
+    padding: 18px 30px;
 }
 
-
-/* =========================
-   NAVBAR
-========================= */
-
-.navbar {
-    width: 100%;
-    padding: 22px 7%;
+.header-container {
+    max-width: 1100px;
+    margin: auto;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: #ffffff;
-    border-bottom: 1px solid #e7eaf1;
+    justify-content: space-between;
 }
 
 .logo {
     font-size: 22px;
     font-weight: 700;
-    color: #172033;
+    color: #4056c6;
 }
 
 .status {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #4d5870;
+    gap: 7px;
+    font-size: 13px;
+    color: #4b5563;
 }
 
 .status-dot {
     width: 9px;
     height: 9px;
-    background: #36a269;
     border-radius: 50%;
+    background: #22c55e;
 }
 
 
-/* =========================
-   HERO
-========================= */
+/* =========================================
+   HERO SECTION
+========================================= */
 
 .hero {
-    padding: 80px 20px 55px;
+    max-width: 900px;
+    margin: 55px auto 35px;
+    padding: 0 20px;
     text-align: center;
 }
 
-.hero-content {
-    max-width: 800px;
-    margin: auto;
-}
-
-.eyebrow {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
+.hero-badge {
+    display: inline-block;
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: #e9edff;
     color: #4056c6;
-    margin-bottom: 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
 }
 
 .hero h1 {
-    font-size: 54px;
-    line-height: 1.1;
-    margin-bottom: 22px;
-    letter-spacing: -1.5px;
+    font-size: 42px;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    color: #111827;
 }
 
-.hero h1 span {
-    color: #4056c6;
-}
-
-.subtitle {
-    max-width: 650px;
+.hero p {
+    max-width: 720px;
     margin: auto;
-    font-size: 17px;
-    color: #667085;
-}
-
-
-/* =========================
-   ANALYZER
-========================= */
-
-.analyzer {
-    width: 90%;
-    max-width: 850px;
-    margin: 0 auto 70px;
-    padding: 35px;
-    background: #ffffff;
-    border: 1px solid #e4e7ee;
-    border-radius: 18px;
-    box-shadow: 0 10px 35px rgba(24, 39, 75, 0.06);
-}
-
-.analyzer-header {
-    margin-bottom: 22px;
-}
-
-.analyzer-header h2 {
-    font-size: 25px;
-    margin-bottom: 5px;
-}
-
-.analyzer-header p {
     color: #6b7280;
+    font-size: 16px;
 }
 
 
-/* =========================
-   INPUT
-========================= */
+/* =========================================
+   MAIN CONTAINER
+========================================= */
 
-.input-area {
-    border: 1px solid #dfe3eb;
-    border-radius: 12px;
-    overflow: hidden;
+.container {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+
+/* =========================================
+   ANALYZER CARD
+========================================= */
+
+.analyzer-card {
     background: #ffffff;
+    border: 1px solid #e1e5ed;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 18px rgba(20, 30, 60, 0.05);
 }
+
+.analyzer-card h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.analyzer-card > p {
+    color: #6b7280;
+    margin-bottom: 18px;
+}
+
+
+/* =========================================
+   TEXTAREA
+========================================= */
 
 textarea {
     width: 100%;
     min-height: 230px;
-    padding: 18px;
-    border: none;
-    outline: none;
     resize: vertical;
+    border: 1px solid #d8dce6;
+    border-radius: 11px;
+    padding: 15px;
     font-family: inherit;
     font-size: 15px;
-    color: #172033;
+    color: #1f2937;
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea:focus {
+    border-color: #4056c6;
+    box-shadow: 0 0 0 3px rgba(64, 86, 198, 0.10);
 }
 
 textarea::placeholder {
-    color: #9aa2b1;
-}
-
-.input-footer {
-    padding: 10px 15px;
-    border-top: 1px solid #e8ebf1;
-    font-size: 13px;
-    color: #7a8498;
+    color: #9ca3af;
 }
 
 
-/* =========================
-   ERROR
-========================= */
+/* =========================================
+   CHARACTER COUNT
+========================================= */
+
+.character-count {
+    text-align: right;
+    margin-top: 7px;
+    margin-bottom: 12px;
+    color: #8a91a1;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
 
 .error-message {
-    margin-top: 15px;
-    padding: 12px 15px;
-    border-radius: 10px;
-    background: #fff0f0;
-    border: 1px solid #ffd4d4;
-    color: #b42318;
-    font-size: 14px;
+    min-height: 20px;
+    margin-bottom: 8px;
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 
-/* =========================
+/* =========================================
    ANALYZE BUTTON
-========================= */
+========================================= */
 
-.analyze-button {
+#analyzeButton {
     width: 100%;
-    margin-top: 18px;
-    padding: 15px 20px;
+    padding: 14px 18px;
     border: none;
     border-radius: 10px;
     background: #4056c6;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
     cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-
-    transition: transform 0.2s ease,
-                opacity 0.2s ease;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-.analyze-button:hover {
-    transform: translateY(-1px);
-    opacity: 0.92;
+#analyzeButton:hover {
+    background: #3347ad;
 }
 
-.analyze-button:disabled {
+#analyzeButton:active {
+    transform: scale(0.99);
+}
+
+#analyzeButton:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-.button-arrow {
-    font-size: 20px;
-}
 
-
-/* =========================
+/* =========================================
    LOADING
-========================= */
+========================================= */
 
 .loading {
+    display: none;
     text-align: center;
-    padding: 30px 10px 10px;
-    color: #667085;
-}
-
-.spinner {
-    width: 30px;
-    height: 30px;
-    margin: 0 auto 12px;
-
-    border: 3px solid #e2e6f0;
-    border-top: 3px solid #4056c6;
-    border-radius: 50%;
-
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    padding: 18px;
+    color: #4056c6;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 
-/* =========================
+/* =========================================
    RESULT CARD
-========================= */
+========================================= */
 
 .result-card {
-    margin-top: 25px;
-    padding: 25px;
+    display: none;
+    margin-top: 20px;
+    background: #ffffff;
+    border: 1px solid #e1e5ed;
     border-radius: 15px;
-    border: 1px solid #e0e5fa;
+    padding: 25px;
+    box-shadow: 0 5px 18px rgba(20, 30, 60, 0.05);
 }
 
-.result-top {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.result-header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .result-icon {
     width: 52px;
     height: 52px;
-    border-radius: 50%;
-
+    margin: 0 auto 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    color: white;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef1ff;
+    color: #4056c6;
     font-size: 25px;
     font-weight: 700;
 }
 
-.result-label {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    font-weight: 700;
-    color: #70798c;
+.result-header h3 {
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #6b7280;
+    margin-bottom: 5px;
 }
 
-.result-heading h3 {
-    font-size: 27px;
+.result-text {
+    font-size: 31px;
+    font-weight: 800;
+    color: #111827;
 }
 
 
-/* =========================
+/* =========================================
    CONFIDENCE
-========================= */
+========================================= */
 
-.confidence-section {
-    margin-top: 25px;
+.confidence-box {
+    margin-top: 20px;
 }
 
-.confidence-header {
+.confidence-label {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 9px;
+    margin-bottom: 7px;
     font-size: 14px;
+    color: #4b5563;
 }
 
-.confidence-header strong {
-    font-size: 16px;
+.confidence-value {
+    font-weight: 700;
+    color: #111827;
 }
 
 .confidence-bar {
     width: 100%;
     height: 10px;
-    background: #e8ebf2;
-    border-radius: 20px;
+    background: #e7eaf1;
+    border-radius: 10px;
     overflow: hidden;
 }
 
 .confidence-fill {
-    height: 100%;
     width: 0%;
-    border-radius: 20px;
+    height: 100%;
+    background: #4056c6;
+    border-radius: 10px;
     transition: width 0.5s ease;
 }
 
 
-/* =========================
+/* =========================================
    WARNING
-========================= */
+========================================= */
 
 .warning-message {
-    margin-top: 18px;
-    padding: 13px 15px;
-    border-radius: 10px;
-    background: #fff8e7;
-    border: 1px solid #f3dfaa;
-    color: #765b16;
+    margin-top: 15px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    background: #fff8e6;
+    border: 1px solid #f2dfaa;
+    color: #80621a;
     font-size: 13px;
 }
 
 
-/* =========================
+/* =========================================
    WHY THIS RESULT
-========================= */
+========================================= */
 
 .explanation-section {
+    display: none;
     margin-top: 20px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.75);
+    background: #ffffff;
     border: 1px solid #e1e5ed;
     border-radius: 13px;
 }
 
 .explanation-header {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 13px;
+    align-items: flex-start;
+    gap: 11px;
+    margin-bottom: 15px;
 }
 
 .explanation-icon {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-    background: #4056c6;
-    color: white;
-    font-weight: 700;
-    font-size: 18px;
+    background: #eef1ff;
+    color: #4056c6;
+    font-size: 17px;
 }
 
 .explanation-label {
-    font-size: 10px;
-    letter-spacing: 1.4px;
-    font-weight: 700;
-    color: #6d7688;
+    margin: 0;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #4056c6;
 }
 
 .explanation-header h4 {
-    font-size: 17px;
-    margin-top: 1px;
+    margin-top: 2px;
+    font-size: 18px;
+    color: #111827;
 }
 
 .explanation-text {
-    color: #4d5870;
+    margin-top: 8px;
+    color: #4b5563;
     font-size: 14px;
-    margin-bottom: 16px;
+    line-height: 1.7;
 }
 
 .verification-tip {
-    padding: 14px 15px;
-    border-radius: 10px;
+    margin-top: 15px;
+    padding: 13px 14px;
+    border-left: 4px solid #4056c6;
     background: #f5f7ff;
-    border: 1px solid #e0e5fa;
+    border-radius: 8px;
+    color: #4b5563;
+    font-size: 13px;
 }
 
 .verification-tip strong {
-    font-size: 14px;
-    color: #30439d;
-}
-
-.verification-tip p {
-    margin-top: 5px;
-    font-size: 13px;
-    color: #5e687d;
+    display: block;
+    margin-bottom: 4px;
+    color: #111827;
 }
 
 
-/* =========================
+/* =========================================
    KEY CLAIMS
-========================= */
+========================================= */
 
 .claims-section {
+    display: none;
     margin-top: 20px;
     padding: 20px;
-
     background: #ffffff;
     border: 1px solid #e1e5ed;
     border-radius: 13px;
@@ -421,42 +414,42 @@ textarea::placeholder {
 
 .claims-header {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    align-items: flex-start;
+    gap: 11px;
+    margin-bottom: 10px;
 }
 
 .claims-icon {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #eef1ff;
     border-radius: 50%;
-
+    background: #eef1ff;
+    color: #4056c6;
     font-size: 17px;
 }
 
 .claims-label {
-    font-size: 10px;
-    letter-spacing: 1.4px;
-    font-weight: 700;
-    color: #6d7688;
+    margin: 0;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #4056c6;
 }
 
 .claims-header h4 {
-    font-size: 17px;
-    margin-top: 1px;
+    margin-top: 2px;
+    font-size: 18px;
+    color: #111827;
 }
 
 .claims-description {
     margin-bottom: 15px;
+    color: #6b7280;
     font-size: 13px;
-    color: #697386;
 }
 
 .claims-list {
@@ -469,9 +462,7 @@ textarea::placeholder {
     display: flex;
     align-items: flex-start;
     gap: 11px;
-
     padding: 13px;
-
     background: #f7f9ff;
     border: 1px solid #e3e7f5;
     border-radius: 10px;
@@ -481,130 +472,148 @@ textarea::placeholder {
     width: 25px;
     height: 25px;
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #4056c6;
     color: #ffffff;
-
     border-radius: 50%;
-
     font-size: 12px;
     font-weight: 700;
 }
 
-.claim-text {
-    padding-top: 1px;
+.claim-content {
+    flex: 1;
+}
 
-    color: #3f4a60;
-    font-size: 13px;
-    line-height: 1.55;
+.claim-text {
+    margin: 0;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 
-/* =========================
+/* =========================================
+   VERIFY CLAIM BUTTON
+========================================= */
+
+.verify-claim-button {
+    margin-top: 10px;
+    padding: 9px 14px;
+    border: 1px solid #4056c6;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #4056c6;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.verify-claim-button:hover {
+    background: #4056c6;
+    color: #ffffff;
+}
+
+.verify-claim-button:active {
+    transform: scale(0.98);
+}
+
+.verify-claim-button:focus {
+    outline: 2px solid #9da9ee;
+    outline-offset: 2px;
+}
+
+
+/* =========================================
    RESET BUTTON
-========================= */
+========================================= */
 
 .reset-button {
     width: 100%;
-    margin-top: 18px;
+    margin-top: 15px;
     padding: 13px 18px;
-
-    background: transparent;
-    border: 1px solid #cfd5e2;
+    border: 1px solid #d8dce6;
     border-radius: 10px;
-
-    color: #4056c6;
+    background: #ffffff;
+    color: #374151;
     font-size: 14px;
-    font-weight: 600;
-
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .reset-button:hover {
-    background: #f5f7ff;
+    background: #f3f4f6;
+    border-color: #c5cad5;
 }
 
 
-/* =========================
+/* =========================================
    INFO CARDS
-========================= */
+========================================= */
 
-.info {
-    width: 90%;
-    max-width: 1100px;
-    margin: 0 auto 70px;
-
+.info-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .info-card {
-    padding: 25px;
     background: #ffffff;
-    border: 1px solid #e4e7ee;
-    border-radius: 15px;
+    border: 1px solid #e1e5ed;
+    border-radius: 13px;
+    padding: 20px;
 }
 
 .info-icon {
-    width: 42px;
-    height: 42px;
-    margin-bottom: 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-    background: #eef1ff;
-    color: #4056c6;
-    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 8px;
 }
 
 .info-card h3 {
-    margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: #111827;
 }
 
 .info-card p {
-    color: #667085;
-    font-size: 14px;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer {
-    padding: 30px 20px;
-    text-align: center;
-
-    background: #ffffff;
-    border-top: 1px solid #e5e8ef;
-
-    color: #7a8498;
+    color: #6b7280;
     font-size: 13px;
-}
-
-.footer p + p {
-    margin-top: 3px;
+    line-height: 1.6;
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+    padding: 25px 20px;
+    text-align: center;
+    color: #8a91a1;
+    font-size: 12px;
+}
+
+footer p {
+    margin: 3px 0;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
 
 @media (max-width: 700px) {
 
-    .navbar {
-        padding: 18px 5%;
+    header {
+        padding: 15px 18px;
+    }
+
+    .header-container {
+        gap: 10px;
     }
 
     .logo {
@@ -612,41 +621,42 @@ textarea::placeholder {
     }
 
     .status {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .hero {
-        padding: 55px 18px 40px;
+        margin-top: 35px;
+        margin-bottom: 25px;
     }
 
     .hero h1 {
-        font-size: 39px;
+        font-size: 31px;
     }
 
-    .subtitle {
-        font-size: 15px;
+    .hero p {
+        font-size: 14px;
     }
 
-    .analyzer {
-        width: 92%;
-        padding: 22px;
-        margin-bottom: 45px;
+    .container {
+        padding: 0 14px;
     }
 
-    .analyzer-header h2 {
-        font-size: 22px;
+    .analyzer-card,
+    .result-card {
+        padding: 18px;
     }
 
     textarea {
         min-height: 200px;
+        font-size: 14px;
     }
 
-    .result-card {
-        padding: 19px;
+    .result-text {
+        font-size: 27px;
     }
 
-    .result-heading h3 {
-        font-size: 23px;
+    .info-grid {
+        grid-template-columns: 1fr;
     }
 
     .explanation-section,
@@ -655,22 +665,47 @@ textarea::placeholder {
     }
 
     .claim-item {
-        padding: 11px;
+        gap: 9px;
+        padding: 12px;
     }
 
-    .claim-text {
-        font-size: 12.5px;
+    .verify-claim-button {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+    }
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 400px) {
+
+    .hero h1 {
+        font-size: 27px;
     }
 
-    .info {
-        width: 92%;
-        grid-template-columns: 1fr;
-        gap: 15px;
-        margin-bottom: 45px;
+    .hero {
+        padding: 0 10px;
     }
 
-    .info-card {
-        padding: 20px;
+    .container {
+        padding: 0 10px;
     }
 
+    .analyzer-card,
+    .result-card {
+        padding: 15px;
+    }
+
+    .result-text {
+        font-size: 24px;
+    }
+
+    .claims-header h4,
+    .explanation-header h4 {
+        font-size: 16px;
+    }
 }
