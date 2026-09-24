@@ -38,19 +38,44 @@ const claimsSection =
 const claimsList =
     document.getElementById("claimsList");
 
+const historySection =
+    document.getElementById("historySection");
+
+const historyList =
+    document.getElementById("historyList");
+
+const clearHistoryButton =
+    document.getElementById("clearHistoryButton");
+
+
+/* =================================
+   HISTORY STORAGE
+================================= */
+
+const HISTORY_KEY =
+    "truthlens_analysis_history";
+
+let analysisHistory =
+    JSON.parse(
+        localStorage.getItem(HISTORY_KEY)
+    ) || [];
+
 
 /* =================================
    CHARACTER COUNT
 ================================= */
 
-newsText.addEventListener("input", function () {
+newsText.addEventListener(
+    "input",
+    function () {
 
-    characterCount.textContent =
-        `${newsText.value.length} characters`;
+        characterCount.textContent =
+            `${newsText.value.length} characters`;
 
-    errorMessage.textContent = "";
+        errorMessage.textContent = "";
 
-});
+    }
+);
 
 
 /* =================================
@@ -106,20 +131,21 @@ async function analyzeArticle() {
 
     try {
 
-        const response = await fetch(
-            API_URL,
-            {
-                method: "POST",
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
-                body: JSON.stringify({
-                    text: articleText
-                })
-            }
-        );
+                    body: JSON.stringify({
+                        text: articleText
+                    })
+                }
+            );
 
 
         if (!response.ok) {
@@ -265,10 +291,13 @@ function showResult(
 
 
     /* ==============================
-       NEW FEATURES
+       SUMMARY + RISK
     =============================== */
 
-    generateArticleSummary(articleText);
+    generateArticleSummary(
+        articleText
+    );
+
 
     generateRiskLevel(
         data.result,
@@ -282,6 +311,17 @@ function showResult(
 
     generateKeyClaims(
         articleText
+    );
+
+
+    /* ==============================
+       SAVE HISTORY
+    =============================== */
+
+    saveAnalysisToHistory(
+        data,
+        articleText,
+        confidence
     );
 
 
@@ -306,8 +346,9 @@ function generateArticleSummary(
             .replace(/\s+/g, " ")
             .trim()
             .split(/(?<=[.!?])\s+/)
-            .filter(sentence =>
-                sentence.length > 20
+            .filter(
+                sentence =>
+                    sentence.length > 20
             );
 
 
@@ -361,21 +402,24 @@ function generateRiskLevel(
 
     if (confidence < 60) {
 
-        level = "HIGH UNCERTAINTY";
+        level =
+            "HIGH UNCERTAINTY";
 
         description =
             "The model has limited confidence in this prediction. The article should be verified carefully before relying on it.";
 
     } else if (confidence < 80) {
 
-        level = "MEDIUM UNCERTAINTY";
+        level =
+            "MEDIUM UNCERTAINTY";
 
         description =
             "The model shows moderate confidence. Checking the important claims is recommended.";
 
     } else {
 
-        level = "LOWER UNCERTAINTY";
+        level =
+            "LOWER UNCERTAINTY";
 
         description =
             "The model shows higher confidence, but the prediction is still not proof that the article is completely true or false.";
@@ -546,11 +590,13 @@ function generateKeyClaims(
     const sentences =
         cleanedText
             .split(/(?<=[.!?])\s+/)
-            .map(sentence =>
-                sentence.trim()
+            .map(
+                sentence =>
+                    sentence.trim()
             )
-            .filter(sentence =>
-                sentence.length > 30
+            .filter(
+                sentence =>
+                    sentence.length > 30
             );
 
 
@@ -730,10 +776,6 @@ function addClaim(
         claim;
 
 
-    /* ==============================
-       VERIFY BUTTON
-    =============================== */
-
     const verifyButton =
         document.createElement("button");
 
@@ -829,6 +871,286 @@ function verifyClaim(
 
 
 /* =================================
+   SAVE ANALYSIS TO HISTORY
+================================= */
+
+function saveAnalysisToHistory(
+    data,
+    articleText,
+    confidence
+) {
+
+    const riskLevel =
+        getRiskLevel(
+            confidence
+        );
+
+
+    const historyItem = {
+
+        id:
+            Date.now(),
+
+        result:
+            data.result,
+
+        confidence:
+            confidence,
+
+        risk:
+            riskLevel,
+
+        article:
+            articleText,
+
+        preview:
+            articleText.length > 160
+                ? articleText.substring(0, 160) + "..."
+                : articleText,
+
+        date:
+            new Date().toLocaleString()
+
+    };
+
+
+    analysisHistory.unshift(
+        historyItem
+    );
+
+
+    /* Keep latest 10 analyses */
+
+    analysisHistory =
+        analysisHistory.slice(0, 10);
+
+
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(
+            analysisHistory
+        )
+    );
+
+
+    renderHistory();
+
+}
+
+
+/* =================================
+   GET RISK LEVEL
+================================= */
+
+function getRiskLevel(
+    confidence
+) {
+
+    if (confidence < 60) {
+
+        return "HIGH UNCERTAINTY";
+
+    }
+
+
+    if (confidence < 80) {
+
+        return "MEDIUM UNCERTAINTY";
+
+    }
+
+
+    return "LOWER UNCERTAINTY";
+
+}
+
+
+/* =================================
+   RENDER HISTORY
+================================= */
+
+function renderHistory() {
+
+    historyList.innerHTML = "";
+
+
+    if (
+        analysisHistory.length === 0
+    ) {
+
+        historyList.innerHTML =
+            `
+            <div class="empty-history">
+                <p>No previous analyses yet.</p>
+                <span>Your analyzed articles will appear here.</span>
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    analysisHistory.forEach(
+        item => {
+
+            const historyItem =
+                document.createElement("div");
+
+            historyItem.className =
+                "history-item";
+
+
+            const historyTop =
+                document.createElement("div");
+
+            historyTop.className =
+                "history-top";
+
+
+            const resultBadge =
+                document.createElement("span");
+
+            resultBadge.className =
+                item.result === "FAKE"
+                    ? "history-result fake"
+                    : "history-result credible";
+
+            resultBadge.textContent =
+                item.result;
+
+
+            const confidence =
+                document.createElement("span");
+
+            confidence.className =
+                "history-confidence";
+
+            confidence.textContent =
+                `${Number(item.confidence).toFixed(2)}% confidence`;
+
+
+            historyTop.appendChild(
+                resultBadge
+            );
+
+            historyTop.appendChild(
+                confidence
+            );
+
+
+            const preview =
+                document.createElement("p");
+
+            preview.className =
+                "history-preview";
+
+            preview.textContent =
+                item.preview;
+
+
+            const historyBottom =
+                document.createElement("div");
+
+            historyBottom.className =
+                "history-bottom";
+
+
+            const risk =
+                document.createElement("span");
+
+            risk.className =
+                "history-risk";
+
+            risk.textContent =
+                `🚦 ${item.risk}`;
+
+
+            const date =
+                document.createElement("span");
+
+            date.className =
+                "history-date";
+
+            date.textContent =
+                `🕒 ${item.date}`;
+
+
+            historyBottom.appendChild(
+                risk
+            );
+
+            historyBottom.appendChild(
+                date
+            );
+
+
+            historyItem.appendChild(
+                historyTop
+            );
+
+            historyItem.appendChild(
+                preview
+            );
+
+            historyItem.appendChild(
+                historyBottom
+            );
+
+
+            historyList.appendChild(
+                historyItem
+            );
+
+        }
+    );
+
+}
+
+
+/* =================================
+   CLEAR HISTORY
+================================= */
+
+clearHistoryButton.addEventListener(
+    "click",
+    function () {
+
+        if (
+            analysisHistory.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        const confirmed =
+            confirm(
+                "Clear all TruthLens AI analysis history?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        analysisHistory = [];
+
+
+        localStorage.removeItem(
+            HISTORY_KEY
+        );
+
+
+        renderHistory();
+
+    }
+);
+
+
+/* =================================
    RESET
 ================================= */
 
@@ -902,3 +1224,10 @@ function resetAnalyzer() {
     });
 
 }
+
+
+/* =================================
+   INITIAL LOAD
+================================= */
+
+renderHistory();
