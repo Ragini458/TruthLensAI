@@ -93,7 +93,6 @@ async function analyzeArticle() {
 
     errorMessage.textContent = "";
 
-
     analyzeButton.disabled = true;
 
     loading.style.display = "block";
@@ -266,6 +265,18 @@ function showResult(
 
 
     /* ==============================
+       NEW FEATURES
+    =============================== */
+
+    generateArticleSummary(articleText);
+
+    generateRiskLevel(
+        data.result,
+        confidence
+    );
+
+
+    /* ==============================
        KEY CLAIMS
     =============================== */
 
@@ -278,6 +289,239 @@ function showResult(
         behavior: "smooth",
         block: "start"
     });
+
+}
+
+
+/* =================================
+   ARTICLE SUMMARY
+================================= */
+
+function generateArticleSummary(
+    articleText
+) {
+
+    const sentences =
+        articleText
+            .replace(/\s+/g, " ")
+            .trim()
+            .split(/(?<=[.!?])\s+/)
+            .filter(sentence =>
+                sentence.length > 20
+            );
+
+
+    if (sentences.length === 0) {
+        return;
+    }
+
+
+    let summary = "";
+
+
+    if (sentences.length <= 2) {
+
+        summary =
+            sentences.join(" ");
+
+    } else {
+
+        summary =
+            sentences
+                .slice(0, 2)
+                .join(" ");
+
+    }
+
+
+    createDynamicSection(
+        "articleSummarySection",
+        "📝",
+        "ARTICLE SUMMARY",
+        "Quick overview",
+        summary,
+        "summary"
+    );
+
+}
+
+
+/* =================================
+   RISK LEVEL
+================================= */
+
+function generateRiskLevel(
+    result,
+    confidence
+) {
+
+    let level = "";
+    let description = "";
+
+
+    if (confidence < 60) {
+
+        level = "HIGH UNCERTAINTY";
+
+        description =
+            "The model has limited confidence in this prediction. The article should be verified carefully before relying on it.";
+
+    } else if (confidence < 80) {
+
+        level = "MEDIUM UNCERTAINTY";
+
+        description =
+            "The model shows moderate confidence. Checking the important claims is recommended.";
+
+    } else {
+
+        level = "LOWER UNCERTAINTY";
+
+        description =
+            "The model shows higher confidence, but the prediction is still not proof that the article is completely true or false.";
+
+    }
+
+
+    if (result === "FAKE") {
+
+        description =
+            "The model classified this article as potentially fake. " +
+            description;
+
+    } else {
+
+        description =
+            "The model classified this article as potentially credible. " +
+            description;
+
+    }
+
+
+    createDynamicSection(
+        "riskLevelSection",
+        "🚦",
+        "RISK LEVEL",
+        level,
+        description,
+        "risk"
+    );
+
+}
+
+
+/* =================================
+   DYNAMIC SECTION CREATOR
+================================= */
+
+function createDynamicSection(
+    id,
+    icon,
+    label,
+    title,
+    description,
+    type
+) {
+
+    const existingSection =
+        document.getElementById(id);
+
+
+    if (existingSection) {
+        existingSection.remove();
+    }
+
+
+    const section =
+        document.createElement("div");
+
+    section.id = id;
+
+    section.className =
+        `dynamic-section ${type}-section`;
+
+
+    const header =
+        document.createElement("div");
+
+    header.className =
+        "dynamic-section-header";
+
+
+    const iconElement =
+        document.createElement("span");
+
+    iconElement.className =
+        "dynamic-section-icon";
+
+    iconElement.textContent =
+        icon;
+
+
+    const headingContainer =
+        document.createElement("div");
+
+
+    const labelElement =
+        document.createElement("p");
+
+    labelElement.className =
+        "dynamic-section-label";
+
+    labelElement.textContent =
+        label;
+
+
+    const titleElement =
+        document.createElement("h4");
+
+    titleElement.className =
+        "dynamic-section-title";
+
+    titleElement.textContent =
+        title;
+
+
+    headingContainer.appendChild(
+        labelElement
+    );
+
+    headingContainer.appendChild(
+        titleElement
+    );
+
+
+    header.appendChild(
+        iconElement
+    );
+
+    header.appendChild(
+        headingContainer
+    );
+
+
+    const descriptionElement =
+        document.createElement("p");
+
+    descriptionElement.className =
+        "dynamic-section-description";
+
+    descriptionElement.textContent =
+        description;
+
+
+    section.appendChild(
+        header
+    );
+
+    section.appendChild(
+        descriptionElement
+    );
+
+
+    resultCard.appendChild(
+        section
+    );
 
 }
 
@@ -627,6 +871,27 @@ function resetAnalyzer() {
 
     confidenceText.textContent =
         "";
+
+
+    const summarySection =
+        document.getElementById(
+            "articleSummarySection"
+        );
+
+    if (summarySection) {
+        summarySection.remove();
+    }
+
+
+    const riskSection =
+        document.getElementById(
+            "riskLevelSection"
+        );
+
+    if (riskSection) {
+        riskSection.remove();
+    }
+
 
     newsText.focus();
 
