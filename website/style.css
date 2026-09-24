@@ -57,7 +57,7 @@ header {
 
 
 /* =========================================
-   HERO SECTION
+   HERO
 ========================================= */
 
 .hero {
@@ -95,7 +95,7 @@ header {
 
 
 /* =========================================
-   MAIN CONTAINER
+   CONTAINER
 ========================================= */
 
 .container {
@@ -144,12 +144,15 @@ textarea {
     font-size: 15px;
     color: #1f2937;
     outline: none;
-    transition: border 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        border 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 textarea:focus {
     border-color: #4056c6;
-    box-shadow: 0 0 0 3px rgba(64, 86, 198, 0.10);
+    box-shadow:
+        0 0 0 3px rgba(64, 86, 198, 0.10);
 }
 
 textarea::placeholder {
@@ -171,7 +174,7 @@ textarea::placeholder {
 
 
 /* =========================================
-   ERROR MESSAGE
+   ERROR
 ========================================= */
 
 .error-message {
@@ -197,7 +200,9 @@ textarea::placeholder {
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
 }
 
 #analyzeButton:hover {
@@ -239,7 +244,8 @@ textarea::placeholder {
     border: 1px solid #e1e5ed;
     border-radius: 15px;
     padding: 25px;
-    box-shadow: 0 5px 18px rgba(20, 30, 60, 0.05);
+    box-shadow:
+        0 5px 18px rgba(20, 30, 60, 0.05);
 }
 
 .result-header {
@@ -329,7 +335,7 @@ textarea::placeholder {
 
 
 /* =========================================
-   WHY THIS RESULT
+   EXPLANATION
 ========================================= */
 
 .explanation-section {
@@ -603,7 +609,7 @@ footer p {
 
 
 /* =========================================
-   MOBILE RESPONSIVE
+   MOBILE
 ========================================= */
 
 @media (max-width: 700px) {
@@ -674,6 +680,7 @@ footer p {
         margin-top: 10px;
         padding: 10px;
     }
+
 }
 
 
@@ -708,4 +715,5 @@ footer p {
     .explanation-header h4 {
         font-size: 16px;
     }
+
 }

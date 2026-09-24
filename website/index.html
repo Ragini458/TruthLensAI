@@ -1,22 +1,352 @@
-<div id="claimsSection" class="claims-section">
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="claims-header">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <span class="claims-icon">🔎</span>
+    <title>TruthLens AI</title>
 
-        <div>
-            <p class="claims-label">KEY CLAIMS</p>
+    <link rel="stylesheet" href="./style.css">
+</head>
 
-            <h4>Important statements detected</h4>
+<body>
+
+    <header>
+        <div class="header-container">
+
+            <div class="logo">
+                TRUTHLENS AI
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                AI System Online
+            </div>
+
+        </div>
+    </header>
+
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            AI-POWERED NEWS ANALYSIS
         </div>
 
-    </div>
+        <h1>
+            Detect Fake News with AI.
+        </h1>
 
-    <p class="claims-description">
-        These are important statements identified from
-        the submitted article for further verification.
-    </p>
+        <p>
+            Paste a news article below and let TruthLens AI
+            analyze its content using a machine learning model.
+        </p>
 
-    <div id="claimsList" class="claims-list"></div>
+    </section>
 
-</div>
+
+    <main class="container">
+
+        <section class="analyzer-card">
+
+            <h2>
+                News Analyzer
+            </h2>
+
+            <p>
+                Paste the complete article text for analysis.
+            </p>
+
+            <textarea
+                id="newsText"
+                placeholder="Paste your news article here..."
+            ></textarea>
+
+            <div
+                id="characterCount"
+                class="character-count"
+            >
+                0 characters
+            </div>
+
+            <div
+                id="errorMessage"
+                class="error-message"
+            ></div>
+
+            <button
+                id="analyzeButton"
+                type="button"
+            >
+                Analyze Article →
+            </button>
+
+            <div
+                id="loading"
+                class="loading"
+            >
+                Analyzing article...
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             RESULT
+        =============================== -->
+
+        <section
+            id="resultCard"
+            class="result-card"
+        >
+
+            <div class="result-header">
+
+                <div
+                    id="resultIcon"
+                    class="result-icon"
+                >
+                    AI
+                </div>
+
+                <h3>
+                    AI ANALYSIS RESULT
+                </h3>
+
+                <div
+                    id="resultText"
+                    class="result-text"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="confidence-box">
+
+                <div class="confidence-label">
+
+                    <span>
+                        Model Confidence
+                    </span>
+
+                    <span
+                        id="confidenceText"
+                        class="confidence-value"
+                    >
+                    </span>
+
+                </div>
+
+                <div class="confidence-bar">
+
+                    <div
+                        id="confidenceFill"
+                        class="confidence-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="warningMessage"
+                class="warning-message"
+            >
+            </div>
+
+
+            <!-- ==============================
+                 WHY THIS RESULT
+            =============================== -->
+
+            <div
+                id="explanationSection"
+                class="explanation-section"
+            >
+
+                <div class="explanation-header">
+
+                    <span class="explanation-icon">
+                        ?
+                    </span>
+
+                    <div>
+
+                        <p class="explanation-label">
+                            WHY THIS RESULT?
+                        </p>
+
+                        <h4 id="explanationTitle">
+                            Why the model classified this
+                        </h4>
+
+                    </div>
+
+                </div>
+
+
+                <p
+                    id="explanationText"
+                    class="explanation-text"
+                >
+                </p>
+
+
+                <div class="verification-tip">
+
+                    <strong>
+                        💡 Verification Tip
+                    </strong>
+
+                    <span id="verificationText">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==============================
+                 KEY CLAIMS
+            =============================== -->
+
+            <div
+                id="claimsSection"
+                class="claims-section"
+            >
+
+                <div class="claims-header">
+
+                    <span class="claims-icon">
+                        🔎
+                    </span>
+
+                    <div>
+
+                        <p class="claims-label">
+                            KEY CLAIMS
+                        </p>
+
+                        <h4>
+                            Important statements detected
+                        </h4>
+
+                    </div>
+
+                </div>
+
+
+                <p class="claims-description">
+                    These are important statements identified
+                    from the submitted article for further
+                    verification.
+                </p>
+
+
+                <div
+                    id="claimsList"
+                    class="claims-list"
+                >
+                </div>
+
+            </div>
+
+
+            <button
+                id="resetButton"
+                class="reset-button"
+                type="button"
+            >
+                Analyze Another Article
+            </button>
+
+        </section>
+
+
+        <!-- ==============================
+             INFO CARDS
+        =============================== -->
+
+        <section class="info-grid">
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    AI
+                </div>
+
+                <h3>
+                    Machine Learning
+                </h3>
+
+                <p>
+                    TruthLens AI uses a trained machine
+                    learning model to analyze the text
+                    of news articles.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    %
+                </div>
+
+                <h3>
+                    Confidence Score
+                </h3>
+
+                <p>
+                    The system provides a confidence
+                    percentage alongside every prediction.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    !
+                </div>
+
+                <h3>
+                    Use Carefully
+                </h3>
+
+                <p>
+                    AI predictions can be wrong. Always
+                    verify important information using
+                    reliable sources.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 TruthLens AI
+        </p>
+
+        <p>
+            AI-powered fake news detection project
+        </p>
+
+    </footer>
+
+
+    <script src="./app.js"></script>
+
+</body>
+
+</html>
