@@ -134,7 +134,9 @@ if (analyzeButton) {
 async function analyzeArticle() {
 
     if (!newsText) {
+
         return;
+
     }
 
 
@@ -204,14 +206,16 @@ async function analyzeArticle() {
 
     if (explanationSection) {
 
-        explanationSection.style.display = "none";
+        explanationSection.style.display =
+            "none";
 
     }
 
 
     if (claimsSection) {
 
-        claimsSection.style.display = "none";
+        claimsSection.style.display =
+            "none";
 
     }
 
@@ -231,7 +235,6 @@ async function analyzeArticle() {
                     body: JSON.stringify({
                         text: articleText
                     })
-
                 }
             );
 
@@ -270,7 +273,6 @@ async function analyzeArticle() {
 
         }
 
-
     } finally {
 
         if (analyzeButton) {
@@ -302,7 +304,8 @@ function showResult(
 
     if (resultCard) {
 
-        resultCard.style.display = "block";
+        resultCard.style.display =
+            "block";
 
     }
 
@@ -350,7 +353,8 @@ function showResult(
 
         if (resultText) {
 
-            resultText.textContent = "FAKE";
+            resultText.textContent =
+                "FAKE";
 
         }
 
@@ -389,7 +393,8 @@ function showResult(
 
         if (resultText) {
 
-            resultText.textContent = "CREDIBLE";
+            resultText.textContent =
+                "CREDIBLE";
 
         }
 
@@ -454,7 +459,9 @@ function showResult(
 
     /* SUMMARY */
 
-    generateArticleSummary(articleText);
+    generateArticleSummary(
+        articleText
+    );
 
 
     /* RISK */
@@ -467,7 +474,9 @@ function showResult(
 
     /* CLAIMS */
 
-    generateKeyClaims(articleText);
+    generateKeyClaims(
+        articleText
+    );
 
 
     /* CURRENT ANALYSIS */
@@ -507,7 +516,7 @@ function showResult(
     );
 
 
-    /* MAKE SURE DOWNLOAD BUTTON EXISTS */
+    /* DOWNLOAD BUTTON */
 
     createDownloadButton();
 
@@ -528,7 +537,9 @@ function showResult(
    ARTICLE SUMMARY
 ================================= */
 
-function getArticleSummary(articleText) {
+function getArticleSummary(
+    articleText
+) {
 
     const sentences =
         articleText
@@ -558,10 +569,14 @@ function getArticleSummary(articleText) {
 }
 
 
-function generateArticleSummary(articleText) {
+function generateArticleSummary(
+    articleText
+) {
 
     const summary =
-        getArticleSummary(articleText);
+        getArticleSummary(
+            articleText
+        );
 
 
     if (!summary) {
@@ -587,7 +602,9 @@ function generateArticleSummary(articleText) {
    RISK LEVEL
 ================================= */
 
-function getRiskLevel(confidence) {
+function getRiskLevel(
+    confidence
+) {
 
     if (confidence < 60) {
 
@@ -785,7 +802,9 @@ function createDynamicSection(
    KEY CLAIMS
 ================================= */
 
-function getKeyClaims(articleText) {
+function getKeyClaims(
+    articleText
+) {
 
     const sentences =
         articleText
@@ -806,9 +825,14 @@ function getKeyClaims(articleText) {
 }
 
 
-function generateKeyClaims(articleText) {
+function generateKeyClaims(
+    articleText
+) {
 
-    if (!claimsSection || !claimsList) {
+    if (
+        !claimsSection ||
+        !claimsList
+    ) {
 
         return;
 
@@ -816,7 +840,9 @@ function generateKeyClaims(articleText) {
 
 
     const claims =
-        getKeyClaims(articleText);
+        getKeyClaims(
+            articleText
+        );
 
 
     claimsList.innerHTML = "";
@@ -869,7 +895,9 @@ function generateKeyClaims(articleText) {
                 "click",
                 function () {
 
-                    verifyClaim(claim);
+                    verifyClaim(
+                        claim
+                    );
 
                 }
             );
@@ -902,7 +930,9 @@ function generateKeyClaims(articleText) {
    VERIFY CLAIM
 ================================= */
 
-function verifyClaim(claim) {
+function verifyClaim(
+    claim
+) {
 
     const searchQuery =
         encodeURIComponent(
@@ -945,10 +975,14 @@ function saveAnalysisToHistory(
             articleText,
 
         summary:
-            getArticleSummary(articleText),
+            getArticleSummary(
+                articleText
+            ),
 
         risk:
-            getRiskLevel(confidence),
+            getRiskLevel(
+                confidence
+            ),
 
         date:
             new Date().toLocaleString()
@@ -1008,7 +1042,9 @@ function renderHistory() {
     historyList.innerHTML = "";
 
 
-    if (analysisHistory.length === 0) {
+    if (
+        analysisHistory.length === 0
+    ) {
 
         const emptyMessage =
             document.createElement("p");
@@ -1133,7 +1169,7 @@ if (clearHistoryButton) {
 
 
 /* =================================
-   DOWNLOAD REPORT
+   DOWNLOAD BUTTON
 ================================= */
 
 function createDownloadButton() {
@@ -1166,6 +1202,7 @@ function createDownloadButton() {
 
     downloadSection.style.marginTop =
         "20px";
+
 
     downloadSection.style.textAlign =
         "center";
@@ -1200,279 +1237,4 @@ function createDownloadButton() {
 
 
     button.style.border =
-        "none";
-
-
-    button.style.borderRadius =
-        "10px";
-
-
-    button.style.fontSize =
-        "15px";
-
-
-    button.style.fontWeight =
-        "600";
-
-
-    button.addEventListener(
-        "click",
-        downloadAnalysisReport
-    );
-
-
-    downloadSection.appendChild(
-        button
-    );
-
-
-    resultCard.appendChild(
-        downloadSection
-    );
-
-}
-
-
-function downloadAnalysisReport() {
-
-    if (!currentAnalysis) {
-
-        alert(
-            "Please analyze an article first."
-        );
-
-        return;
-
-    }
-
-
-    const report =
-`
-TRUTHLENS AI
-ANALYSIS REPORT
-==============================
-
-Date:
-${currentAnalysis.date}
-
-RESULT:
-${currentAnalysis.result}
-
-MODEL CONFIDENCE:
-${Number(
-    currentAnalysis.confidence
-).toFixed(2)}%
-
-RISK LEVEL:
-${currentAnalysis.risk}
-
-ARTICLE SUMMARY:
-${currentAnalysis.summary}
-
-KEY CLAIMS:
-${currentAnalysis.claims
-    .map(
-        (claim, index) =>
-            `${index + 1}. ${claim}`
-    )
-    .join("\n")}
-
-ORIGINAL ARTICLE:
-${currentAnalysis.article}
-
-==============================
-
-This report was generated by TruthLens AI.
-
-AI predictions can be incorrect.
-Always verify important information
-using reliable sources.
-`;
-
-
-    const blob =
-        new Blob(
-            [report],
-            {
-                type:
-                    "text/plain;charset=utf-8"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href =
-        url;
-
-
-    link.download =
-        "TruthLens_AI_Analysis_Report.txt";
-
-
-    document.body.appendChild(
-        link
-    );
-
-
-    link.click();
-
-
-    document.body.removeChild(
-        link
-    );
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
-}
-
-
-/* =================================
-   RESET
-================================= */
-
-if (resetButton) {
-
-    resetButton.addEventListener(
-        "click",
-        resetAnalyzer
-    );
-
-}
-
-
-function resetAnalyzer() {
-
-    if (newsText) {
-
-        newsText.value = "";
-
-    }
-
-
-    if (characterCount) {
-
-        characterCount.textContent =
-            "0 characters";
-
-    }
-
-
-    if (errorMessage) {
-
-        errorMessage.textContent = "";
-
-    }
-
-
-    if (resultCard) {
-
-        resultCard.style.display =
-            "none";
-
-    }
-
-
-    if (explanationSection) {
-
-        explanationSection.style.display =
-            "none";
-
-    }
-
-
-    if (claimsSection) {
-
-        claimsSection.style.display =
-            "none";
-
-    }
-
-
-    const summarySection =
-        document.getElementById(
-            "articleSummarySection"
-        );
-
-
-    if (summarySection) {
-
-        summarySection.remove();
-
-    }
-
-
-    const riskSection =
-        document.getElementById(
-            "riskLevelSection"
-        );
-
-
-    if (riskSection) {
-
-        riskSection.remove();
-
-    }
-
-
-    currentAnalysis = null;
-
-
-    if (newsText) {
-
-        newsText.focus();
-
-    }
-
-}
-
-
-/* =================================
-   TEXT TRUNCATION
-================================= */
-
-function truncateText(
-    text,
-    maxLength
-) {
-
-    if (!text) {
-
-        return "";
-
-    }
-
-
-    if (text.length <= maxLength) {
-
-        return text;
-
-    }
-
-
-    return (
-        text.substring(
-            0,
-            maxLength
-        ) + "..."
-    );
-
-}
-
-
-/* =================================
-   INITIALIZE
-================================= */
-
-renderHistory();
+        "no
