@@ -24,8 +24,6 @@ const confidenceFill = document.getElementById("confidenceFill");
 const warningMessage = document.getElementById("warningMessage");
 
 const resetButton = document.getElementById("resetButton");
-const downloadReportButton =
-    document.getElementById("downloadReportButton");
 
 const explanationSection =
     document.getElementById("explanationSection");
@@ -57,16 +55,21 @@ const clearHistoryButton =
 ================================= */
 
 try {
+
     const savedHistory =
         localStorage.getItem(HISTORY_KEY);
 
     if (savedHistory) {
+
         analysisHistory =
             JSON.parse(savedHistory);
+
     }
 
     if (!Array.isArray(analysisHistory)) {
+
         analysisHistory = [];
+
     }
 
 } catch (error) {
@@ -77,6 +80,7 @@ try {
     );
 
     analysisHistory = [];
+
 }
 
 
@@ -84,17 +88,23 @@ try {
    CHARACTER COUNT
 ================================= */
 
-if (newsText && characterCount) {
+if (newsText) {
 
     newsText.addEventListener(
         "input",
         function () {
 
-            characterCount.textContent =
-                `${newsText.value.length} characters`;
+            if (characterCount) {
+
+                characterCount.textContent =
+                    `${newsText.value.length} characters`;
+
+            }
 
             if (errorMessage) {
+
                 errorMessage.textContent = "";
+
             }
 
         }
@@ -127,6 +137,7 @@ async function analyzeArticle() {
         return;
     }
 
+
     const articleText =
         newsText.value.trim();
 
@@ -134,56 +145,74 @@ async function analyzeArticle() {
     if (!articleText) {
 
         if (errorMessage) {
+
             errorMessage.textContent =
                 "Please paste a news article first.";
+
         }
 
         newsText.focus();
 
         return;
+
     }
 
 
     if (articleText.length < 30) {
 
         if (errorMessage) {
+
             errorMessage.textContent =
                 "Please enter a longer article for better analysis.";
+
         }
 
         newsText.focus();
 
         return;
+
     }
 
 
     if (errorMessage) {
+
         errorMessage.textContent = "";
+
     }
 
 
     if (analyzeButton) {
+
         analyzeButton.disabled = true;
+
     }
 
 
     if (loading) {
+
         loading.style.display = "block";
+
     }
 
 
     if (resultCard) {
+
         resultCard.style.display = "none";
+
     }
 
 
     if (explanationSection) {
+
         explanationSection.style.display = "none";
+
     }
 
 
     if (claimsSection) {
+
         claimsSection.style.display = "none";
+
     }
 
 
@@ -202,6 +231,7 @@ async function analyzeArticle() {
                     body: JSON.stringify({
                         text: articleText
                     })
+
                 }
             );
 
@@ -244,11 +274,16 @@ async function analyzeArticle() {
     } finally {
 
         if (analyzeButton) {
+
             analyzeButton.disabled = false;
+
         }
 
+
         if (loading) {
+
             loading.style.display = "none";
+
         }
 
     }
@@ -266,7 +301,9 @@ function showResult(
 ) {
 
     if (resultCard) {
+
         resultCard.style.display = "block";
+
     }
 
 
@@ -286,9 +323,13 @@ function showResult(
 
         const safeConfidence =
             Math.min(
-                Math.max(confidence, 0),
+                Math.max(
+                    confidence,
+                    0
+                ),
                 100
             );
+
 
         confidenceFill.style.width =
             `${safeConfidence}%`;
@@ -301,58 +342,89 @@ function showResult(
     if (data.result === "FAKE") {
 
         if (resultIcon) {
+
             resultIcon.textContent = "!";
+
         }
+
 
         if (resultText) {
+
             resultText.textContent = "FAKE";
+
         }
+
 
         if (explanationTitle) {
+
             explanationTitle.textContent =
                 "Why the model flagged this";
+
         }
+
 
         if (explanationText) {
+
             explanationText.textContent =
                 "The machine learning model found language patterns in this article that are associated with articles labeled as fake in its training data.";
+
         }
 
+
         if (verificationText) {
+
             verificationText.textContent =
                 "Check the main claims against official sources, established news organizations, and other independent sources before treating the information as reliable.";
+
         }
 
     } else {
 
         if (resultIcon) {
+
             resultIcon.textContent = "✓";
+
         }
+
 
         if (resultText) {
+
             resultText.textContent = "CREDIBLE";
+
         }
+
 
         if (explanationTitle) {
+
             explanationTitle.textContent =
                 "Why the model classified this";
+
         }
+
 
         if (explanationText) {
+
             explanationText.textContent =
                 "The machine learning model found language patterns in this article that are associated with articles labeled as credible in its training data.";
+
         }
 
+
         if (verificationText) {
+
             verificationText.textContent =
                 "A credible prediction does not prove that every statement in the article is true. Important claims should still be verified using reliable sources.";
+
         }
 
     }
 
 
     if (explanationSection) {
-        explanationSection.style.display = "block";
+
+        explanationSection.style.display =
+            "block";
+
     }
 
 
@@ -435,6 +507,11 @@ function showResult(
     );
 
 
+    /* MAKE SURE DOWNLOAD BUTTON EXISTS */
+
+    createDownloadButton();
+
+
     if (resultCard) {
 
         resultCard.scrollIntoView({
@@ -465,7 +542,12 @@ function getArticleSummary(articleText) {
 
 
     if (sentences.length === 0) {
-        return articleText.substring(0, 250);
+
+        return articleText.substring(
+            0,
+            250
+        );
+
     }
 
 
@@ -483,7 +565,9 @@ function generateArticleSummary(articleText) {
 
 
     if (!summary) {
+
         return;
+
     }
 
 
@@ -506,12 +590,16 @@ function generateArticleSummary(articleText) {
 function getRiskLevel(confidence) {
 
     if (confidence < 60) {
+
         return "HIGH UNCERTAINTY";
+
     }
 
 
     if (confidence < 80) {
+
         return "MEDIUM UNCERTAINTY";
+
     }
 
 
@@ -531,21 +619,24 @@ function generateRiskLevel(
 
     if (confidence < 60) {
 
-        level = "HIGH UNCERTAINTY";
+        level =
+            "HIGH UNCERTAINTY";
 
         description =
             "The model has limited confidence in this prediction. The article should be verified carefully before relying on it.";
 
     } else if (confidence < 80) {
 
-        level = "MEDIUM UNCERTAINTY";
+        level =
+            "MEDIUM UNCERTAINTY";
 
         description =
             "The model shows moderate confidence. Checking the important claims is recommended.";
 
     } else {
 
-        level = "LOWER UNCERTAINTY";
+        level =
+            "LOWER UNCERTAINTY";
 
         description =
             "The model shows higher confidence, but the prediction is still not proof that the article is completely true or false.";
@@ -598,7 +689,16 @@ function createDynamicSection(
 
 
     if (existingSection) {
+
         existingSection.remove();
+
+    }
+
+
+    if (!resultCard) {
+
+        return;
+
     }
 
 
@@ -674,13 +774,9 @@ function createDynamicSection(
     );
 
 
-    if (resultCard) {
-
-        resultCard.appendChild(
-            section
-        );
-
-    }
+    resultCard.appendChild(
+        section
+    );
 
 }
 
@@ -702,7 +798,10 @@ function getKeyClaims(articleText) {
             );
 
 
-    return sentences.slice(0, 5);
+    return sentences.slice(
+        0,
+        5
+    );
 
 }
 
@@ -710,7 +809,9 @@ function getKeyClaims(articleText) {
 function generateKeyClaims(articleText) {
 
     if (!claimsSection || !claimsList) {
+
         return;
+
     }
 
 
@@ -727,11 +828,12 @@ function generateKeyClaims(articleText) {
             "none";
 
         return;
+
     }
 
 
     claims.forEach(
-        function (claim, index) {
+        function (claim) {
 
             const item =
                 document.createElement("li");
@@ -822,7 +924,7 @@ function verifyClaim(claim) {
 
 
 /* =================================
-   SAVE HISTORY
+   HISTORY
 ================================= */
 
 function saveAnalysisToHistory(
@@ -860,7 +962,10 @@ function saveAnalysisToHistory(
 
 
     analysisHistory =
-        analysisHistory.slice(0, 10);
+        analysisHistory.slice(
+            0,
+            10
+        );
 
 
     try {
@@ -894,7 +999,9 @@ function saveAnalysisToHistory(
 function renderHistory() {
 
     if (!historyList) {
+
         return;
+
     }
 
 
@@ -914,6 +1021,7 @@ function renderHistory() {
         );
 
         return;
+
     }
 
 
@@ -999,9 +1107,22 @@ if (clearHistoryButton) {
 
             analysisHistory = [];
 
-            localStorage.removeItem(
-                HISTORY_KEY
-            );
+
+            try {
+
+                localStorage.removeItem(
+                    HISTORY_KEY
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "History clear error:",
+                    error
+                );
+
+            }
+
 
             renderHistory();
 
@@ -1015,11 +1136,98 @@ if (clearHistoryButton) {
    DOWNLOAD REPORT
 ================================= */
 
-if (downloadReportButton) {
+function createDownloadButton() {
 
-    downloadReportButton.addEventListener(
+    if (!resultCard) {
+
+        return;
+
+    }
+
+
+    if (
+        document.getElementById(
+            "downloadReportButton"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const downloadSection =
+        document.createElement("div");
+
+
+    downloadSection.className =
+        "download-section";
+
+
+    downloadSection.style.marginTop =
+        "20px";
+
+    downloadSection.style.textAlign =
+        "center";
+
+
+    const button =
+        document.createElement("button");
+
+
+    button.id =
+        "downloadReportButton";
+
+
+    button.type =
+        "button";
+
+
+    button.className =
+        "download-report-button";
+
+
+    button.textContent =
+        "📄 Download Analysis Report";
+
+
+    button.style.padding =
+        "12px 20px";
+
+
+    button.style.cursor =
+        "pointer";
+
+
+    button.style.border =
+        "none";
+
+
+    button.style.borderRadius =
+        "10px";
+
+
+    button.style.fontSize =
+        "15px";
+
+
+    button.style.fontWeight =
+        "600";
+
+
+    button.addEventListener(
         "click",
         downloadAnalysisReport
+    );
+
+
+    downloadSection.appendChild(
+        button
+    );
+
+
+    resultCard.appendChild(
+        downloadSection
     );
 
 }
@@ -1034,6 +1242,7 @@ function downloadAnalysisReport() {
         );
 
         return;
+
     }
 
 
@@ -1098,9 +1307,7 @@ using reliable sources.
 
 
     const link =
-        document.createElement(
-            "a"
-        );
+        document.createElement("a");
 
 
     link.href =
@@ -1148,7 +1355,9 @@ if (resetButton) {
 function resetAnalyzer() {
 
     if (newsText) {
+
         newsText.value = "";
+
     }
 
 
@@ -1161,22 +1370,33 @@ function resetAnalyzer() {
 
 
     if (errorMessage) {
+
         errorMessage.textContent = "";
+
     }
 
 
     if (resultCard) {
-        resultCard.style.display = "none";
+
+        resultCard.style.display =
+            "none";
+
     }
 
 
     if (explanationSection) {
-        explanationSection.style.display = "none";
+
+        explanationSection.style.display =
+            "none";
+
     }
 
 
     if (claimsSection) {
-        claimsSection.style.display = "none";
+
+        claimsSection.style.display =
+            "none";
+
     }
 
 
@@ -1185,8 +1405,11 @@ function resetAnalyzer() {
             "articleSummarySection"
         );
 
+
     if (summarySection) {
+
         summarySection.remove();
+
     }
 
 
@@ -1195,8 +1418,11 @@ function resetAnalyzer() {
             "riskLevelSection"
         );
 
+
     if (riskSection) {
+
         riskSection.remove();
+
     }
 
 
@@ -1204,7 +1430,9 @@ function resetAnalyzer() {
 
 
     if (newsText) {
+
         newsText.focus();
+
     }
 
 }
@@ -1220,12 +1448,16 @@ function truncateText(
 ) {
 
     if (!text) {
+
         return "";
+
     }
 
 
     if (text.length <= maxLength) {
+
         return text;
+
     }
 
 
