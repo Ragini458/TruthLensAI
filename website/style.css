@@ -8,11 +8,21 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: #f4f6fb;
     color: #1f2937;
     line-height: 1.6;
+    overflow-x: hidden;
+}
+
+button,
+textarea {
+    font-family: inherit;
 }
 
 
@@ -32,12 +42,14 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 15px;
 }
 
 .logo {
     font-size: 22px;
     font-weight: 700;
     color: #4056c6;
+    white-space: nowrap;
 }
 
 .status {
@@ -46,11 +58,13 @@ header {
     gap: 7px;
     font-size: 13px;
     color: #4b5563;
+    white-space: nowrap;
 }
 
 .status-dot {
     width: 9px;
     height: 9px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: #22c55e;
 }
@@ -99,6 +113,7 @@ header {
 ========================================= */
 
 .container {
+    width: 100%;
     max-width: 900px;
     margin: 0 auto 60px;
     padding: 0 20px;
@@ -134,15 +149,16 @@ header {
 ========================================= */
 
 textarea {
+    display: block;
     width: 100%;
     min-height: 230px;
     resize: vertical;
     border: 1px solid #d8dce6;
     border-radius: 11px;
     padding: 15px;
-    font-family: inherit;
     font-size: 15px;
     color: #1f2937;
+    background: #ffffff;
     outline: none;
     transition:
         border 0.2s ease,
@@ -192,6 +208,7 @@ textarea::placeholder {
 
 #analyzeButton {
     width: 100%;
+    min-height: 48px;
     padding: 14px 18px;
     border: none;
     border-radius: 10px;
@@ -244,8 +261,7 @@ textarea::placeholder {
     border: 1px solid #e1e5ed;
     border-radius: 15px;
     padding: 25px;
-    box-shadow:
-        0 5px 18px rgba(20, 30, 60, 0.05);
+    box-shadow: 0 5px 18px rgba(20, 30, 60, 0.05);
 }
 
 .result-header {
@@ -278,6 +294,7 @@ textarea::placeholder {
     font-size: 31px;
     font-weight: 800;
     color: #111827;
+    word-break: break-word;
 }
 
 
@@ -292,6 +309,7 @@ textarea::placeholder {
 .confidence-label {
     display: flex;
     justify-content: space-between;
+    gap: 15px;
     margin-bottom: 7px;
     font-size: 14px;
     color: #4b5563;
@@ -300,6 +318,7 @@ textarea::placeholder {
 .confidence-value {
     font-weight: 700;
     color: #111827;
+    white-space: nowrap;
 }
 
 .confidence-bar {
@@ -331,6 +350,7 @@ textarea::placeholder {
     border: 1px solid #f2dfaa;
     color: #80621a;
     font-size: 13px;
+    line-height: 1.6;
 }
 
 
@@ -341,379 +361,3 @@ textarea::placeholder {
 .explanation-section {
     display: none;
     margin-top: 20px;
-    padding: 20px;
-    background: #ffffff;
-    border: 1px solid #e1e5ed;
-    border-radius: 13px;
-}
-
-.explanation-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    margin-bottom: 15px;
-}
-
-.explanation-icon {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #eef1ff;
-    color: #4056c6;
-    font-size: 17px;
-}
-
-.explanation-label {
-    margin: 0;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #4056c6;
-}
-
-.explanation-header h4 {
-    margin-top: 2px;
-    font-size: 18px;
-    color: #111827;
-}
-
-.explanation-text {
-    margin-top: 8px;
-    color: #4b5563;
-    font-size: 14px;
-    line-height: 1.7;
-}
-
-.verification-tip {
-    margin-top: 15px;
-    padding: 13px 14px;
-    border-left: 4px solid #4056c6;
-    background: #f5f7ff;
-    border-radius: 8px;
-    color: #4b5563;
-    font-size: 13px;
-}
-
-.verification-tip strong {
-    display: block;
-    margin-bottom: 4px;
-    color: #111827;
-}
-
-
-/* =========================================
-   KEY CLAIMS
-========================================= */
-
-.claims-section {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background: #ffffff;
-    border: 1px solid #e1e5ed;
-    border-radius: 13px;
-}
-
-.claims-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    margin-bottom: 10px;
-}
-
-.claims-icon {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #eef1ff;
-    color: #4056c6;
-    font-size: 17px;
-}
-
-.claims-label {
-    margin: 0;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #4056c6;
-}
-
-.claims-header h4 {
-    margin-top: 2px;
-    font-size: 18px;
-    color: #111827;
-}
-
-.claims-description {
-    margin-bottom: 15px;
-    color: #6b7280;
-    font-size: 13px;
-}
-
-.claims-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.claim-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    padding: 13px;
-    background: #f7f9ff;
-    border: 1px solid #e3e7f5;
-    border-radius: 10px;
-}
-
-.claim-number {
-    width: 25px;
-    height: 25px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #4056c6;
-    color: #ffffff;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.claim-content {
-    flex: 1;
-}
-
-.claim-text {
-    margin: 0;
-    color: #374151;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-
-/* =========================================
-   VERIFY CLAIM BUTTON
-========================================= */
-
-.verify-claim-button {
-    margin-top: 10px;
-    padding: 9px 14px;
-    border: 1px solid #4056c6;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #4056c6;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.verify-claim-button:hover {
-    background: #4056c6;
-    color: #ffffff;
-}
-
-.verify-claim-button:active {
-    transform: scale(0.98);
-}
-
-.verify-claim-button:focus {
-    outline: 2px solid #9da9ee;
-    outline-offset: 2px;
-}
-
-
-/* =========================================
-   RESET BUTTON
-========================================= */
-
-.reset-button {
-    width: 100%;
-    margin-top: 15px;
-    padding: 13px 18px;
-    border: 1px solid #d8dce6;
-    border-radius: 10px;
-    background: #ffffff;
-    color: #374151;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.reset-button:hover {
-    background: #f3f4f6;
-    border-color: #c5cad5;
-}
-
-
-/* =========================================
-   INFO CARDS
-========================================= */
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.info-card {
-    background: #ffffff;
-    border: 1px solid #e1e5ed;
-    border-radius: 13px;
-    padding: 20px;
-}
-
-.info-icon {
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
-.info-card h3 {
-    font-size: 15px;
-    margin-bottom: 6px;
-    color: #111827;
-}
-
-.info-card p {
-    color: #6b7280;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-
-/* =========================================
-   FOOTER
-========================================= */
-
-footer {
-    padding: 25px 20px;
-    text-align: center;
-    color: #8a91a1;
-    font-size: 12px;
-}
-
-footer p {
-    margin: 3px 0;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 700px) {
-
-    header {
-        padding: 15px 18px;
-    }
-
-    .header-container {
-        gap: 10px;
-    }
-
-    .logo {
-        font-size: 19px;
-    }
-
-    .status {
-        font-size: 11px;
-    }
-
-    .hero {
-        margin-top: 35px;
-        margin-bottom: 25px;
-    }
-
-    .hero h1 {
-        font-size: 31px;
-    }
-
-    .hero p {
-        font-size: 14px;
-    }
-
-    .container {
-        padding: 0 14px;
-    }
-
-    .analyzer-card,
-    .result-card {
-        padding: 18px;
-    }
-
-    textarea {
-        min-height: 200px;
-        font-size: 14px;
-    }
-
-    .result-text {
-        font-size: 27px;
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .explanation-section,
-    .claims-section {
-        padding: 17px;
-    }
-
-    .claim-item {
-        gap: 9px;
-        padding: 12px;
-    }
-
-    .verify-claim-button {
-        width: 100%;
-        margin-top: 10px;
-        padding: 10px;
-    }
-
-}
-
-
-/* =========================================
-   SMALL PHONES
-========================================= */
-
-@media (max-width: 400px) {
-
-    .hero h1 {
-        font-size: 27px;
-    }
-
-    .hero {
-        padding: 0 10px;
-    }
-
-    .container {
-        padding: 0 10px;
-    }
-
-    .analyzer-card,
-    .result-card {
-        padding: 15px;
-    }
-
-    .result-text {
-        font-size: 24px;
-    }
-
-    .claims-header h4,
-    .explanation-header h4 {
-        font-size: 16px;
-    }
-
-}
