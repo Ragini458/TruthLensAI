@@ -1,104 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TruthLens AI</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="./style.css">
+    <meta
+        name="description"
+        content="TruthLens AI - Detect potentially fake news using machine learning."
+    >
+
+    <title>TruthLens AI - Fake News Detection</title>
+
+    <link
+        rel="stylesheet"
+        href="./style.css"
+    >
 </head>
 
 <body>
 
-    <header>
-        <div class="header-container">
+    <!-- =================================
+         HEADER / HERO
+    ================================== -->
+
+    <header class="hero">
+
+        <div class="hero-content">
 
             <div class="logo">
-                TRUTHLENS AI
+                🔍 TruthLens AI
             </div>
 
-            <div class="status">
-                <span class="status-dot"></span>
-                AI System Online
-            </div>
+            <h1>
+                Detect Fake News with AI.
+            </h1>
+
+            <p>
+                Paste a news article below and let TruthLens AI
+                analyze its content using a machine learning model.
+            </p>
 
         </div>
+
     </header>
 
 
-    <section class="hero">
-
-        <div class="hero-badge">
-            AI-POWERED NEWS ANALYSIS
-        </div>
-
-        <h1>
-            Detect Fake News with AI.
-        </h1>
-
-        <p>
-            Paste a news article below and let TruthLens AI
-            analyze its content using a machine learning model.
-        </p>
-
-    </section>
-
+    <!-- =================================
+         MAIN
+    ================================== -->
 
     <main class="container">
 
+
+        <!-- =================================
+             NEWS ANALYZER
+        ================================== -->
+
         <section class="analyzer-card">
 
-            <h2>
-                News Analyzer
-            </h2>
+            <div class="section-heading">
 
-            <p>
-                Paste the complete article text for analysis.
-            </p>
+                <h2>
+                    News Analyzer
+                </h2>
+
+                <p>
+                    Paste the complete article text for analysis.
+                </p>
+
+            </div>
+
 
             <textarea
                 id="newsText"
+                class="news-textarea"
                 placeholder="Paste your news article here..."
+                rows="12"
             ></textarea>
 
-            <div
-                id="characterCount"
-                class="character-count"
-            >
-                0 characters
+
+            <div class="input-footer">
+
+                <span id="characterCount">
+                    0 characters
+                </span>
+
             </div>
 
-            <div
+
+            <p
                 id="errorMessage"
                 class="error-message"
-            ></div>
+            ></p>
 
-            <button
-                id="analyzeButton"
-                type="button"
-            >
-                Analyze Article →
-            </button>
+
+            <div class="button-group">
+
+                <button
+                    id="analyzeButton"
+                    class="primary-button"
+                    type="button"
+                >
+                    Analyze Article →
+                </button>
+
+                <button
+                    id="resetButton"
+                    class="secondary-button"
+                    type="button"
+                >
+                    Analyze Another Article
+                </button>
+
+            </div>
+
 
             <div
                 id="loading"
                 class="loading"
+                style="display: none;"
             >
-                Analyzing article...
+                <div class="loading-spinner"></div>
+
+                <p>
+                    Analyzing article...
+                </p>
+
             </div>
 
         </section>
 
 
-        <!-- ==============================
-             RESULT
-        =============================== -->
+
+        <!-- =================================
+             RESULT CARD
+        ================================== -->
 
         <section
             id="resultCard"
             class="result-card"
+            style="display: none;"
         >
 
             <div class="result-header">
@@ -107,43 +152,47 @@
                     id="resultIcon"
                     class="result-icon"
                 >
-                    AI
+                    ?
                 </div>
 
-                <h3>
-                    AI ANALYSIS RESULT
-                </h3>
+                <div>
 
-                <div
-                    id="resultText"
-                    class="result-text"
-                >
+                    <p class="result-label">
+                        AI ANALYSIS RESULT
+                    </p>
+
+                    <h2 id="resultText">
+                        RESULT
+                    </h2>
+
                 </div>
 
             </div>
 
 
-            <div class="confidence-box">
+            <!-- CONFIDENCE -->
 
-                <div class="confidence-label">
+            <div class="confidence-section">
+
+                <div class="confidence-header">
 
                     <span>
                         Model Confidence
                     </span>
 
-                    <span
-                        id="confidenceText"
-                        class="confidence-value"
-                    >
-                    </span>
+                    <strong id="confidenceText">
+                        0.00%
+                    </strong>
 
                 </div>
+
 
                 <div class="confidence-bar">
 
                     <div
                         id="confidenceFill"
                         class="confidence-fill"
+                        style="width: 0%;"
                     ></div>
 
                 </div>
@@ -151,47 +200,53 @@
             </div>
 
 
+            <!-- WARNING -->
+
             <div
                 id="warningMessage"
                 class="warning-message"
-            >
-            </div>
+            ></div>
 
 
-            <!-- ==============================
-                 WHY THIS RESULT
-            =============================== -->
 
-            <div
+            <!-- =================================
+                 EXPLANATION
+            ================================== -->
+
+            <section
                 id="explanationSection"
-                class="explanation-section"
+                class="result-section"
+                style="display: none;"
             >
 
-                <div class="explanation-header">
+                <div class="section-title">
 
-                    <span class="explanation-icon">
+                    <span>
                         ?
                     </span>
 
                     <div>
 
-                        <p class="explanation-label">
+                        <h3>
                             WHY THIS RESULT?
-                        </p>
+                        </h3>
 
-                        <h4 id="explanationTitle">
-                            Why the model classified this
-                        </h4>
+                        <p>
+                            Model explanation
+                        </p>
 
                     </div>
 
                 </div>
 
 
-                <p
-                    id="explanationText"
-                    class="explanation-text"
-                >
+                <h4 id="explanationTitle">
+                    Why the model classified this
+                </h4>
+
+
+                <p id="explanationText">
+                    The model explanation will appear here.
                 </p>
 
 
@@ -201,74 +256,87 @@
                         💡 Verification Tip
                     </strong>
 
-                    <span id="verificationText">
-                    </span>
+                    <p id="verificationText">
+                        Important claims should still be verified
+                        using reliable sources.
+                    </p>
 
                 </div>
 
-            </div>
+            </section>
 
 
-            <!-- ==============================
+
+            <!-- =================================
                  KEY CLAIMS
-            =============================== -->
+            ================================== -->
 
-            <div
+            <section
                 id="claimsSection"
-                class="claims-section"
+                class="result-section"
+                style="display: none;"
             >
 
-                <div class="claims-header">
+                <div class="section-title">
 
-                    <span class="claims-icon">
+                    <span>
                         🔎
                     </span>
 
                     <div>
 
-                        <p class="claims-label">
+                        <h3>
                             KEY CLAIMS
-                        </p>
+                        </h3>
 
-                        <h4>
+                        <p>
                             Important statements detected
-                        </h4>
+                        </p>
 
                     </div>
 
                 </div>
 
 
-                <p class="claims-description">
+                <p class="section-description">
                     These are important statements identified
-                    from the submitted article for further
-                    verification.
+                    from the submitted article for further verification.
                 </p>
 
 
-                <div
+                <ul
                     id="claimsList"
                     class="claims-list"
+                ></ul>
+
+            </section>
+
+
+
+            <!-- =================================
+                 DOWNLOAD REPORT
+            ================================== -->
+
+            <div class="download-section">
+
+                <button
+                    id="downloadReportButton"
+                    class="download-report-button"
+                    type="button"
                 >
-                </div>
+                    📄 Download Analysis Report
+                </button>
 
             </div>
 
 
-            <button
-                id="resetButton"
-                class="reset-button"
-                type="button"
-            >
-                Analyze Another Article
-            </button>
-
         </section>
 
 
-        <!-- ==============================
+
+        <!-- =================================
              ANALYSIS HISTORY
-        =============================== -->
+        ================================== -->
 
         <section
             id="historySection"
@@ -279,15 +347,16 @@
 
                 <div>
 
-                    <p class="history-label">
-                        ANALYSIS HISTORY
-                    </p>
-
                     <h2>
-                        Previous Analyses
+                        ANALYSIS HISTORY
                     </h2>
 
+                    <p>
+                        Previous Analyses
+                    </p>
+
                 </div>
+
 
                 <button
                     id="clearHistoryButton"
@@ -303,17 +372,17 @@
             <div
                 id="historyList"
                 class="history-list"
-            >
-            </div>
+            ></div>
 
         </section>
 
 
-        <!-- ==============================
-             INFO CARDS
-        =============================== -->
 
-        <section class="info-grid">
+        <!-- =================================
+             INFORMATION CARDS
+        ================================== -->
+
+        <section class="info-section">
 
             <div class="info-card">
 
@@ -326,9 +395,8 @@
                 </h3>
 
                 <p>
-                    TruthLens AI uses a trained machine
-                    learning model to analyze the text
-                    of news articles.
+                    TruthLens AI uses a trained machine learning
+                    model to analyze the text of news articles.
                 </p>
 
             </div>
@@ -345,8 +413,8 @@
                 </h3>
 
                 <p>
-                    The system provides a confidence
-                    percentage alongside every prediction.
+                    The system provides a confidence percentage
+                    alongside every prediction.
                 </p>
 
             </div>
@@ -363,9 +431,8 @@
                 </h3>
 
                 <p>
-                    AI predictions can be wrong. Always
-                    verify important information using
-                    reliable sources.
+                    AI predictions can be wrong. Always verify
+                    important information using reliable sources.
                 </p>
 
             </div>
@@ -375,21 +442,30 @@
     </main>
 
 
-    <footer>
+
+    <!-- =================================
+         FOOTER
+    ================================== -->
+
+    <footer class="footer">
 
         <p>
             © 2026 TruthLens AI
         </p>
 
         <p>
-            AI-powered fake news detection project
+            AI-powered news analysis tool
         </p>
 
     </footer>
 
 
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================== -->
+
     <script src="./app.js"></script>
 
 </body>
-
 </html>

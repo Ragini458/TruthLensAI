@@ -1,5 +1,6 @@
 /* =========================================
    TRUTHLENS AI - MAIN STYLES
+   Responsive + Mobile Polished Version
 ========================================= */
 
 * {
@@ -23,6 +24,14 @@ body {
 button,
 textarea {
     font-family: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hidden {
+    display: none !important;
 }
 
 
@@ -67,6 +76,7 @@ header {
     flex-shrink: 0;
     border-radius: 50%;
     background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.10);
 }
 
 
@@ -109,7 +119,7 @@ header {
 
 
 /* =========================================
-   CONTAINER
+   MAIN CONTAINER
 ========================================= */
 
 .container {
@@ -121,15 +131,28 @@ header {
 
 
 /* =========================================
+   COMMON CARD
+========================================= */
+
+.analyzer-card,
+.result-card,
+.explanation-section,
+.claims-section,
+.history-section,
+.dynamic-section {
+    background: #ffffff;
+    border: 1px solid #e1e5ed;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(20, 30, 60, 0.05);
+}
+
+
+/* =========================================
    ANALYZER CARD
 ========================================= */
 
 .analyzer-card {
-    background: #ffffff;
-    border: 1px solid #e1e5ed;
-    border-radius: 15px;
     padding: 25px;
-    box-shadow: 0 5px 18px rgba(20, 30, 60, 0.05);
 }
 
 .analyzer-card h2 {
@@ -157,6 +180,7 @@ textarea {
     border-radius: 11px;
     padding: 15px;
     font-size: 15px;
+    line-height: 1.6;
     color: #1f2937;
     background: #ffffff;
     outline: none;
@@ -167,8 +191,7 @@ textarea {
 
 textarea:focus {
     border-color: #4056c6;
-    box-shadow:
-        0 0 0 3px rgba(64, 86, 198, 0.10);
+    box-shadow: 0 0 0 3px rgba(64, 86, 198, 0.10);
 }
 
 textarea::placeholder {
@@ -219,11 +242,13 @@ textarea::placeholder {
     cursor: pointer;
     transition:
         background 0.2s ease,
-        transform 0.1s ease;
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
 }
 
 #analyzeButton:hover {
     background: #3347ad;
+    box-shadow: 0 5px 14px rgba(64, 86, 198, 0.20);
 }
 
 #analyzeButton:active {
@@ -233,6 +258,7 @@ textarea::placeholder {
 #analyzeButton:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 
@@ -257,11 +283,7 @@ textarea::placeholder {
 .result-card {
     display: none;
     margin-top: 20px;
-    background: #ffffff;
-    border: 1px solid #e1e5ed;
-    border-radius: 15px;
     padding: 25px;
-    box-shadow: 0 5px 18px rgba(20, 30, 60, 0.05);
 }
 
 .result-header {
@@ -309,6 +331,7 @@ textarea::placeholder {
 .confidence-label {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 15px;
     margin-bottom: 7px;
     font-size: 14px;
@@ -361,3 +384,852 @@ textarea::placeholder {
 .explanation-section {
     display: none;
     margin-top: 20px;
+    padding: 22px;
+}
+
+.explanation-header,
+.claims-header,
+.history-header,
+.dynamic-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.explanation-icon,
+.claims-icon,
+.dynamic-section-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #eef1ff;
+    color: #4056c6;
+    font-size: 17px;
+}
+
+.explanation-label,
+.claims-label,
+.history-label,
+.dynamic-section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    color: #4056c6;
+    text-transform: uppercase;
+}
+
+.explanation-text {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.verification-tip {
+    margin-top: 15px;
+    padding: 13px 14px;
+    border-radius: 9px;
+    background: #f7f8ff;
+    border: 1px solid #e1e5ff;
+    color: #4b5563;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   CLAIMS SECTION
+========================================= */
+
+.claims-section {
+    display: none;
+    margin-top: 20px;
+    padding: 22px;
+}
+
+.claims-description {
+    margin-bottom: 15px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.claims-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.claim-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid #e4e7ee;
+    border-radius: 11px;
+    background: #fafbfe;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.claim-item:hover {
+    border-color: #cfd5e8;
+    box-shadow: 0 3px 10px rgba(20, 30, 60, 0.04);
+}
+
+.claim-number {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e9edff;
+    color: #4056c6;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.claim-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.claim-text {
+    margin-bottom: 9px;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.verify-claim-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 7px 11px;
+    border: 1px solid #cfd6f4;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #4056c6;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.verify-claim-button:hover {
+    background: #eef1ff;
+    border-color: #4056c6;
+}
+
+
+/* =========================================
+   DYNAMIC SECTIONS
+========================================= */
+
+.dynamic-section {
+    margin-top: 20px;
+    padding: 22px;
+}
+
+.dynamic-section-title {
+    color: #111827;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.dynamic-section-description {
+    margin-bottom: 14px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   SUMMARY SECTION
+========================================= */
+
+.summary-section {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+
+/* =========================================
+   RISK SECTION
+========================================= */
+
+.risk-section {
+    padding: 13px 14px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   DOWNLOAD REPORT BUTTON
+========================================= */
+
+.download-report-button {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 18px;
+    padding: 12px 18px;
+    border: 1px solid #cfd6f4;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #4056c6;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+}
+
+.download-report-button:hover {
+    background: #eef1ff;
+    border-color: #4056c6;
+}
+
+.download-report-button:active {
+    transform: scale(0.99);
+}
+
+
+/* =========================================
+   RESET BUTTON
+========================================= */
+
+.reset-button {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 10px;
+    padding: 12px 18px;
+    border: 1px solid #d8dce6;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #4b5563;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+}
+
+.reset-button:hover {
+    background: #f8f9fc;
+    border-color: #bfc5d2;
+}
+
+.reset-button:active {
+    transform: scale(0.99);
+}
+
+
+/* =========================================
+   ANALYSIS HISTORY
+========================================= */
+
+.history-section {
+    margin-top: 20px;
+    padding: 22px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    padding: 15px;
+    border: 1px solid #e2e6ee;
+    border-radius: 11px;
+    background: #fafbfe;
+}
+
+.history-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.history-result {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+}
+
+.history-result.fake {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.history-result.credible {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.history-confidence {
+    color: #374151;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.history-preview {
+    color: #4b5563;
+    font-size: 13px;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.history-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 9px;
+    border-top: 1px solid #e8ebf1;
+}
+
+.history-risk,
+.history-date {
+    color: #8a91a1;
+    font-size: 11px;
+}
+
+.clear-history-button {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 14px;
+    padding: 10px 15px;
+    border: 1px solid #f0caca;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #c03939;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.clear-history-button:hover {
+    background: #fff5f5;
+    border-color: #e7a9a9;
+}
+
+.empty-history {
+    padding: 25px 15px;
+    text-align: center;
+    color: #8a91a1;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   INFO GRID
+========================================= */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.info-card {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e1e5ed;
+    border-radius: 13px;
+    box-shadow: 0 4px 14px rgba(20, 30, 60, 0.04);
+}
+
+.info-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: #eef1ff;
+    color: #4056c6;
+    font-size: 18px;
+}
+
+.info-card h3 {
+    margin-bottom: 6px;
+    color: #111827;
+    font-size: 15px;
+}
+
+.info-card p {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   FOCUS / ACCESSIBILITY
+========================================= */
+
+button:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(64, 86, 198, 0.20);
+    outline-offset: 2px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+    padding: 30px 20px;
+    border-top: 1px solid #e3e7ef;
+    background: #ffffff;
+    text-align: center;
+    color: #8a91a1;
+    font-size: 12px;
+}
+
+footer p {
+    max-width: 800px;
+    margin: auto;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 16px 20px;
+    }
+
+    .header-container {
+        max-width: 100%;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .hero {
+        margin: 42px auto 28px;
+        padding: 0 18px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .container {
+        padding: 0 16px;
+        margin-bottom: 45px;
+    }
+
+    .analyzer-card,
+    .result-card,
+    .explanation-section,
+    .claims-section,
+    .history-section,
+    .dynamic-section {
+        border-radius: 13px;
+        padding: 20px;
+    }
+
+    textarea {
+        min-height: 210px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    header {
+        padding: 14px 15px;
+    }
+
+    .header-container {
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .status {
+        font-size: 11px;
+        gap: 5px;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .hero {
+        margin: 32px auto 24px;
+        padding: 0 15px;
+    }
+
+    .hero-badge {
+        padding: 6px 11px;
+        font-size: 10px;
+        margin-bottom: 12px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 12px;
+    }
+
+    .hero p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .container {
+        padding: 0 12px;
+        margin-bottom: 35px;
+    }
+
+    .analyzer-card,
+    .result-card,
+    .explanation-section,
+    .claims-section,
+    .history-section,
+    .dynamic-section {
+        padding: 17px;
+        border-radius: 12px;
+    }
+
+    .analyzer-card h2 {
+        font-size: 19px;
+    }
+
+    .analyzer-card > p {
+        font-size: 13px;
+        margin-bottom: 14px;
+    }
+
+    textarea {
+        min-height: 200px;
+        padding: 13px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .character-count {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+
+    .error-message {
+        font-size: 12px;
+    }
+
+    #analyzeButton {
+        min-height: 48px;
+        padding: 13px 15px;
+        font-size: 14px;
+        border-radius: 9px;
+    }
+
+    .loading {
+        padding: 14px;
+        font-size: 13px;
+    }
+
+    .result-card {
+        margin-top: 15px;
+    }
+
+    .result-header {
+        margin-bottom: 17px;
+    }
+
+    .result-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+    }
+
+    .result-header h3 {
+        font-size: 11px;
+    }
+
+    .result-text {
+        font-size: 26px;
+    }
+
+    .confidence-box {
+        margin-top: 17px;
+    }
+
+    .confidence-label {
+        font-size: 12px;
+        gap: 8px;
+    }
+
+    .confidence-bar {
+        height: 9px;
+    }
+
+    .warning-message {
+        margin-top: 13px;
+        padding: 11px 12px;
+        font-size: 12px;
+    }
+
+    .explanation-section,
+    .claims-section,
+    .dynamic-section,
+    .history-section {
+        margin-top: 15px;
+    }
+
+    .explanation-header,
+    .claims-header,
+    .history-header,
+    .dynamic-section-header {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .explanation-icon,
+    .claims-icon,
+    .dynamic-section-icon {
+        width: 31px;
+        height: 31px;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    .explanation-label,
+    .claims-label,
+    .history-label,
+    .dynamic-section-label {
+        font-size: 10px;
+    }
+
+    .explanation-text,
+    .summary-section {
+        font-size: 13px;
+    }
+
+    .verification-tip {
+        padding: 11px 12px;
+        font-size: 12px;
+    }
+
+    .claims-description,
+    .dynamic-section-description {
+        font-size: 12px;
+    }
+
+    .claim-item {
+        gap: 9px;
+        padding: 11px;
+        border-radius: 9px;
+    }
+
+    .claim-number {
+        width: 25px;
+        height: 25px;
+        font-size: 11px;
+    }
+
+    .claim-text {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .verify-claim-button {
+        width: 100%;
+        min-height: 35px;
+        padding: 7px 9px;
+        font-size: 11px;
+    }
+
+    .dynamic-section-title {
+        font-size: 16px;
+    }
+
+    .risk-section {
+        font-size: 13px;
+    }
+
+    .download-report-button,
+    .reset-button {
+        min-height: 44px;
+        font-size: 13px;
+    }
+
+    .history-item {
+        padding: 12px;
+    }
+
+    .history-top {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .history-result {
+        font-size: 10px;
+    }
+
+    .history-confidence {
+        font-size: 11px;
+    }
+
+    .history-preview {
+        font-size: 12px;
+    }
+
+    .history-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .clear-history-button {
+        min-height: 42px;
+        font-size: 12px;
+    }
+
+    .info-grid {
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .info-card {
+        padding: 16px;
+        border-radius: 11px;
+    }
+
+    .info-card h3 {
+        font-size: 14px;
+    }
+
+    .info-card p {
+        font-size: 12px;
+    }
+
+    footer {
+        padding: 24px 15px;
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .status {
+        font-size: 10px;
+    }
+
+    .hero h1 {
+        font-size: 25px;
+    }
+
+    .hero p {
+        font-size: 13px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .analyzer-card,
+    .result-card,
+    .explanation-section,
+    .claims-section,
+    .history-section,
+    .dynamic-section {
+        padding: 14px;
+    }
+
+    textarea {
+        min-height: 185px;
+    }
+
+    .result-text {
+        font-size: 23px;
+    }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
