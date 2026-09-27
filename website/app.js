@@ -595,3 +595,7 @@ if (resultCard) {
     });
 }
 }
+function generateArticleSummary() {}
+function generateRiskLevel() {}
+function generateKeyClaims() {}
+function saveAnalysisToHistory() {}
