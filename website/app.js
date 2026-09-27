@@ -1,4 +1,4 @@
-```javascript
+
 const API_URL =
     "https://truthlensai-re6x.onrender.com/predict";
 
