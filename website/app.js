@@ -581,10 +581,17 @@ function showResult(
 
     /* CURRENT ANALYSIS */
 
-    currentAnalysis = {
+   currentAnalysis = {
+    result: result || "UNKNOWN",
+    confidence: confidence,
+    article: articleText,
+    date: new Date().toLocaleString()
+};
 
-        result:
-            result || "UNKNOWN",
-
-        confidence:
-```
+if (resultCard) {
+    resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+}
