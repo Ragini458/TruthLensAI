@@ -1,68 +1,117 @@
-const API_URL = "https://truthlensai-re6x.onrender.com/predict";
+```javascript
+const API_URL =
+    "https://truthlensai-re6x.onrender.com/predict";
 
-const HISTORY_KEY = "truthlens_analysis_history";
+const HISTORY_KEY =
+    "truthlens_analysis_history";
 
 let analysisHistory = [];
 let currentAnalysis = null;
 
 
-/* =================================
+/* =========================================
    ELEMENTS
-================================= */
+========================================= */
 
-const newsText = document.getElementById("newsText");
-const characterCount = document.getElementById("characterCount");
-const errorMessage = document.getElementById("errorMessage");
-const analyzeButton = document.getElementById("analyzeButton");
-const loading = document.getElementById("loading");
+const newsText =
+    document.getElementById("newsText");
 
-const resultCard = document.getElementById("resultCard");
-const resultIcon = document.getElementById("resultIcon");
-const resultText = document.getElementById("resultText");
-const confidenceText = document.getElementById("confidenceText");
-const confidenceFill = document.getElementById("confidenceFill");
-const warningMessage = document.getElementById("warningMessage");
+const characterCount =
+    document.getElementById("characterCount");
 
-const resetButton = document.getElementById("resetButton");
+const errorMessage =
+    document.getElementById("errorMessage");
+
+const analyzeButton =
+    document.getElementById("analyzeButton");
+
+const loading =
+    document.getElementById("loading");
+
+const resultCard =
+    document.getElementById("resultCard");
+
+const resultIcon =
+    document.getElementById("resultIcon");
+
+const resultText =
+    document.getElementById("resultText");
+
+const confidenceText =
+    document.getElementById("confidenceText");
+
+const confidenceFill =
+    document.getElementById("confidenceFill");
+
+const warningMessage =
+    document.getElementById("warningMessage");
+
+const resetButton =
+    document.getElementById("resetButton");
+
+const downloadReportButton =
+    document.getElementById(
+        "downloadReportButton"
+    );
 
 const explanationSection =
-    document.getElementById("explanationSection");
+    document.getElementById(
+        "explanationSection"
+    );
 
 const explanationTitle =
-    document.getElementById("explanationTitle");
+    document.getElementById(
+        "explanationTitle"
+    );
 
 const explanationText =
-    document.getElementById("explanationText");
+    document.getElementById(
+        "explanationText"
+    );
 
 const verificationText =
-    document.getElementById("verificationText");
+    document.getElementById(
+        "verificationText"
+    );
 
 const claimsSection =
-    document.getElementById("claimsSection");
+    document.getElementById(
+        "claimsSection"
+    );
 
 const claimsList =
-    document.getElementById("claimsList");
+    document.getElementById(
+        "claimsList"
+    );
 
 const historyList =
-    document.getElementById("historyList");
+    document.getElementById(
+        "historyList"
+    );
 
 const clearHistoryButton =
-    document.getElementById("clearHistoryButton");
+    document.getElementById(
+        "clearHistoryButton"
+    );
 
 
-/* =================================
+/* =========================================
    LOAD HISTORY
-================================= */
+========================================= */
 
 try {
 
     const savedHistory =
-        localStorage.getItem(HISTORY_KEY);
+        localStorage.getItem(
+            HISTORY_KEY
+        );
 
     if (savedHistory) {
 
         analysisHistory =
-            JSON.parse(savedHistory);
+            JSON.parse(
+                savedHistory
+            );
 
     }
 
@@ -84,9 +133,9 @@ try {
 }
 
 
-/* =================================
+/* =========================================
    CHARACTER COUNT
-================================= */
+========================================= */
 
 if (newsText) {
 
@@ -97,13 +146,15 @@ if (newsText) {
             if (characterCount) {
 
                 characterCount.textContent =
-                    `${newsText.value.length} characters`;
+                    newsText.value.length +
+                    " characters";
 
             }
 
             if (errorMessage) {
 
-                errorMessage.textContent = "";
+                errorMessage.textContent =
+                    "";
 
             }
 
@@ -113,9 +164,9 @@ if (newsText) {
 }
 
 
-/* =================================
+/* =========================================
    ANALYZE BUTTON
-================================= */
+========================================= */
 
 if (analyzeButton) {
 
@@ -127,9 +178,9 @@ if (analyzeButton) {
 }
 
 
-/* =================================
+/* =========================================
    ANALYZE ARTICLE
-================================= */
+========================================= */
 
 async function analyzeArticle() {
 
@@ -139,19 +190,15 @@ async function analyzeArticle() {
 
     }
 
-
     const articleText =
         newsText.value.trim();
 
 
     if (!articleText) {
 
-        if (errorMessage) {
-
-            errorMessage.textContent =
-                "Please paste a news article first.";
-
-        }
+        showError(
+            "Please paste a news article first."
+        );
 
         newsText.focus();
 
@@ -162,12 +209,9 @@ async function analyzeArticle() {
 
     if (articleText.length < 30) {
 
-        if (errorMessage) {
-
-            errorMessage.textContent =
-                "Please enter a longer article for better analysis.";
-
-        }
+        showError(
+            "Please enter a longer article for better analysis."
+        );
 
         newsText.focus();
 
@@ -176,11 +220,7 @@ async function analyzeArticle() {
     }
 
 
-    if (errorMessage) {
-
-        errorMessage.textContent = "";
-
-    }
+    clearError();
 
 
     if (analyzeButton) {
@@ -192,14 +232,16 @@ async function analyzeArticle() {
 
     if (loading) {
 
-        loading.style.display = "block";
+        loading.style.display =
+            "block";
 
     }
 
 
     if (resultCard) {
 
-        resultCard.style.display = "none";
+        resultCard.style.display =
+            "none";
 
     }
 
@@ -229,11 +271,13 @@ async function analyzeArticle() {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
                     body: JSON.stringify({
-                        text: articleText
+                        text:
+                            articleText
                     })
                 }
             );
@@ -242,7 +286,8 @@ async function analyzeArticle() {
         if (!response.ok) {
 
             throw new Error(
-                `Server returned ${response.status}`
+                "Server returned HTTP " +
+                response.status
             );
 
         }
@@ -250,6 +295,12 @@ async function analyzeArticle() {
 
         const data =
             await response.json();
+
+
+        console.log(
+            "API response:",
+            data
+        );
 
 
         showResult(
@@ -266,25 +317,25 @@ async function analyzeArticle() {
         );
 
 
-        if (errorMessage) {
+        showError(
+            "Unable to connect to the TruthLens AI server. Please try again."
+        );
 
-            errorMessage.textContent =
-                "Unable to connect to the TruthLens AI server. Please try again.";
-
-        }
 
     } finally {
 
         if (analyzeButton) {
 
-            analyzeButton.disabled = false;
+            analyzeButton.disabled =
+                false;
 
         }
 
 
         if (loading) {
 
-            loading.style.display = "none";
+            loading.style.display =
+                "none";
 
         }
 
@@ -293,60 +344,108 @@ async function analyzeArticle() {
 }
 
 
-/* =================================
+/* =========================================
+   SHOW ERROR
+========================================= */
+
+function showError(message) {
+
+    if (errorMessage) {
+
+        errorMessage.textContent =
+            message;
+
+    }
+
+}
+
+
+/* =========================================
+   CLEAR ERROR
+========================================= */
+
+function clearError() {
+
+    if (errorMessage) {
+
+        errorMessage.textContent =
+            "";
+
+    }
+
+}
+
+
+/* =========================================
    SHOW RESULT
-================================= */
+========================================= */
 
 function showResult(
     data,
     articleText
 ) {
 
-    if (resultCard) {
+    if (!resultCard) {
 
-        resultCard.style.display =
-            "block";
+        return;
 
     }
 
 
-    const confidence =
-        Number(data.confidence) || 0;
+    resultCard.style.display =
+        "block";
 
+
+    const confidence =
+        Number(
+            data.confidence
+        ) || 0;
+
+
+    const safeConfidence =
+        Math.min(
+            Math.max(
+                confidence,
+                0
+            ),
+            100
+        );
+
+
+    /* CONFIDENCE */
 
     if (confidenceText) {
 
         confidenceText.textContent =
-            `${confidence.toFixed(2)}%`;
+            confidence.toFixed(2) +
+            "%";
 
     }
 
 
     if (confidenceFill) {
 
-        const safeConfidence =
-            Math.min(
-                Math.max(
-                    confidence,
-                    0
-                ),
-                100
-            );
-
-
         confidenceFill.style.width =
-            `${safeConfidence}%`;
+            safeConfidence +
+            "%";
 
     }
 
 
     /* RESULT */
 
-    if (data.result === "FAKE") {
+    const result =
+        String(
+            data.result || ""
+        ).toUpperCase();
+
+
+    if (result === "FAKE") {
 
         if (resultIcon) {
 
-            resultIcon.textContent = "!";
+            resultIcon.textContent =
+                "!";
 
         }
 
@@ -378,7 +477,7 @@ function showResult(
         if (verificationText) {
 
             verificationText.textContent =
-                "Check the main claims against official sources, established news organizations, and other independent sources before treating the information as reliable.";
+                "Check the main claims against official sources, established news organizations, and other independent sources.";
 
         }
 
@@ -386,7 +485,8 @@ function showResult(
 
         if (resultIcon) {
 
-            resultIcon.textContent = "✓";
+            resultIcon.textContent =
+                "OK";
 
         }
 
@@ -440,17 +540,17 @@ function showResult(
         if (confidence < 60) {
 
             warningMessage.textContent =
-                "⚠️ Low-confidence prediction. The model is not strongly confident, so this result should be interpreted carefully.";
+                "Low-confidence prediction. The model is not strongly confident, so this result should be interpreted carefully.";
 
         } else if (confidence < 80) {
 
             warningMessage.textContent =
-                "⚠️ Moderate-confidence prediction. Consider checking the key claims before relying on this result.";
+                "Moderate-confidence prediction. Consider checking the key claims before relying on this result.";
 
         } else {
 
             warningMessage.textContent =
-                "ℹ️ Higher model confidence, but this prediction is not a guarantee of truth or falsehood.";
+                "Higher model confidence, but this prediction is not a guarantee of truth or falsehood.";
 
         }
 
@@ -467,7 +567,7 @@ function showResult(
     /* RISK */
 
     generateRiskLevel(
-        data.result,
+        result,
         confidence
     );
 
@@ -484,757 +584,7 @@ function showResult(
     currentAnalysis = {
 
         result:
-            data.result || "UNKNOWN",
+            result || "UNKNOWN",
 
         confidence:
-            confidence,
-
-        article:
-            articleText,
-
-        summary:
-            getArticleSummary(articleText),
-
-        risk:
-            getRiskLevel(confidence),
-
-        claims:
-            getKeyClaims(articleText),
-
-        date:
-            new Date().toLocaleString()
-
-    };
-
-
-    /* HISTORY */
-
-    saveAnalysisToHistory(
-        data,
-        articleText,
-        confidence
-    );
-
-
-    /* DOWNLOAD BUTTON */
-
-    createDownloadButton();
-
-
-    if (resultCard) {
-
-        resultCard.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    }
-
-}
-
-
-/* =================================
-   ARTICLE SUMMARY
-================================= */
-
-function getArticleSummary(
-    articleText
-) {
-
-    const sentences =
-        articleText
-            .replace(/\s+/g, " ")
-            .trim()
-            .split(/(?<=[.!?])\s+/)
-            .filter(
-                sentence =>
-                    sentence.length > 20
-            );
-
-
-    if (sentences.length === 0) {
-
-        return articleText.substring(
-            0,
-            250
-        );
-
-    }
-
-
-    return sentences
-        .slice(0, 2)
-        .join(" ");
-
-}
-
-
-function generateArticleSummary(
-    articleText
-) {
-
-    const summary =
-        getArticleSummary(
-            articleText
-        );
-
-
-    if (!summary) {
-
-        return;
-
-    }
-
-
-    createDynamicSection(
-        "articleSummarySection",
-        "📝",
-        "ARTICLE SUMMARY",
-        "Quick overview",
-        summary,
-        "summary"
-    );
-
-}
-
-
-/* =================================
-   RISK LEVEL
-================================= */
-
-function getRiskLevel(
-    confidence
-) {
-
-    if (confidence < 60) {
-
-        return "HIGH UNCERTAINTY";
-
-    }
-
-
-    if (confidence < 80) {
-
-        return "MEDIUM UNCERTAINTY";
-
-    }
-
-
-    return "LOWER UNCERTAINTY";
-
-}
-
-
-function generateRiskLevel(
-    result,
-    confidence
-) {
-
-    let level = "";
-    let description = "";
-
-
-    if (confidence < 60) {
-
-        level =
-            "HIGH UNCERTAINTY";
-
-        description =
-            "The model has limited confidence in this prediction. The article should be verified carefully before relying on it.";
-
-    } else if (confidence < 80) {
-
-        level =
-            "MEDIUM UNCERTAINTY";
-
-        description =
-            "The model shows moderate confidence. Checking the important claims is recommended.";
-
-    } else {
-
-        level =
-            "LOWER UNCERTAINTY";
-
-        description =
-            "The model shows higher confidence, but the prediction is still not proof that the article is completely true or false.";
-
-    }
-
-
-    if (result === "FAKE") {
-
-        description =
-            "The model classified this article as potentially fake. " +
-            description;
-
-    } else {
-
-        description =
-            "The model classified this article as potentially credible. " +
-            description;
-
-    }
-
-
-    createDynamicSection(
-        "riskLevelSection",
-        "🚦",
-        "RISK LEVEL",
-        level,
-        description,
-        "risk"
-    );
-
-}
-
-
-/* =================================
-   DYNAMIC SECTION
-================================= */
-
-function createDynamicSection(
-    id,
-    icon,
-    label,
-    title,
-    description,
-    type
-) {
-
-    const existingSection =
-        document.getElementById(id);
-
-
-    if (existingSection) {
-
-        existingSection.remove();
-
-    }
-
-
-    if (!resultCard) {
-
-        return;
-
-    }
-
-
-    const section =
-        document.createElement("div");
-
-    section.id = id;
-
-    section.className =
-        `dynamic-section ${type}-section`;
-
-
-    const header =
-        document.createElement("div");
-
-    header.className =
-        "dynamic-section-header";
-
-
-    const iconElement =
-        document.createElement("span");
-
-    iconElement.className =
-        "dynamic-section-icon";
-
-    iconElement.textContent =
-        icon;
-
-
-    const labelElement =
-        document.createElement("span");
-
-    labelElement.className =
-        "dynamic-section-label";
-
-    labelElement.textContent =
-        label;
-
-
-    header.appendChild(
-        iconElement
-    );
-
-    header.appendChild(
-        labelElement
-    );
-
-
-    const titleElement =
-        document.createElement("h3");
-
-    titleElement.textContent =
-        title;
-
-
-    const descriptionElement =
-        document.createElement("p");
-
-    descriptionElement.textContent =
-        description;
-
-
-    section.appendChild(
-        header
-    );
-
-    section.appendChild(
-        titleElement
-    );
-
-    section.appendChild(
-        descriptionElement
-    );
-
-
-    resultCard.appendChild(
-        section
-    );
-
-}
-
-
-/* =================================
-   KEY CLAIMS
-================================= */
-
-function getKeyClaims(
-    articleText
-) {
-
-    const sentences =
-        articleText
-            .replace(/\s+/g, " ")
-            .trim()
-            .split(/(?<=[.!?])\s+/)
-            .filter(
-                sentence =>
-                    sentence.length > 30
-            );
-
-
-    return sentences.slice(
-        0,
-        5
-    );
-
-}
-
-
-function generateKeyClaims(
-    articleText
-) {
-
-    if (
-        !claimsSection ||
-        !claimsList
-    ) {
-
-        return;
-
-    }
-
-
-    const claims =
-        getKeyClaims(
-            articleText
-        );
-
-
-    claimsList.innerHTML = "";
-
-
-    if (claims.length === 0) {
-
-        claimsSection.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    claims.forEach(
-        function (claim) {
-
-            const item =
-                document.createElement("li");
-
-            item.className =
-                "claim-item";
-
-
-            const claimText =
-                document.createElement("span");
-
-            claimText.className =
-                "claim-text";
-
-            claimText.textContent =
-                claim;
-
-
-            const verifyButton =
-                document.createElement("button");
-
-            verifyButton.type =
-                "button";
-
-            verifyButton.className =
-                "verify-claim-button";
-
-            verifyButton.textContent =
-                "🔎 Verify";
-
-
-            verifyButton.addEventListener(
-                "click",
-                function () {
-
-                    verifyClaim(
-                        claim
-                    );
-
-                }
-            );
-
-
-            item.appendChild(
-                claimText
-            );
-
-            item.appendChild(
-                verifyButton
-            );
-
-
-            claimsList.appendChild(
-                item
-            );
-
-        }
-    );
-
-
-    claimsSection.style.display =
-        "block";
-
-}
-
-
-/* =================================
-   VERIFY CLAIM
-================================= */
-
-function verifyClaim(
-    claim
-) {
-
-    const searchQuery =
-        encodeURIComponent(
-            claim
-        );
-
-
-    const googleURL =
-        `https://www.google.com/search?q=${searchQuery}`;
-
-
-    window.open(
-        googleURL,
-        "_blank",
-        "noopener,noreferrer"
-    );
-
-}
-
-
-/* =================================
-   HISTORY
-================================= */
-
-function saveAnalysisToHistory(
-    data,
-    articleText,
-    confidence
-) {
-
-    const historyItem = {
-
-        result:
-            data.result || "UNKNOWN",
-
-        confidence:
-            confidence,
-
-        article:
-            articleText,
-
-        summary:
-            getArticleSummary(
-                articleText
-            ),
-
-        risk:
-            getRiskLevel(
-                confidence
-            ),
-
-        date:
-            new Date().toLocaleString()
-
-    };
-
-
-    analysisHistory.unshift(
-        historyItem
-    );
-
-
-    analysisHistory =
-        analysisHistory.slice(
-            0,
-            10
-        );
-
-
-    try {
-
-        localStorage.setItem(
-            HISTORY_KEY,
-            JSON.stringify(
-                analysisHistory
-            )
-        );
-
-    } catch (error) {
-
-        console.error(
-            "History save error:",
-            error
-        );
-
-    }
-
-
-    renderHistory();
-
-}
-
-
-/* =================================
-   RENDER HISTORY
-================================= */
-
-function renderHistory() {
-
-    if (!historyList) {
-
-        return;
-
-    }
-
-
-    historyList.innerHTML = "";
-
-
-    if (
-        analysisHistory.length === 0
-    ) {
-
-        const emptyMessage =
-            document.createElement("p");
-
-        emptyMessage.textContent =
-            "No analysis history yet.";
-
-        historyList.appendChild(
-            emptyMessage
-        );
-
-        return;
-
-    }
-
-
-    analysisHistory.forEach(
-        function (item, index) {
-
-            const historyItem =
-                document.createElement("div");
-
-            historyItem.className =
-                "history-item";
-
-
-            const title =
-                document.createElement("h4");
-
-            title.textContent =
-                `${index + 1}. ${item.result}`;
-
-
-            const date =
-                document.createElement("p");
-
-            date.textContent =
-                item.date || "";
-
-
-            const confidence =
-                document.createElement("p");
-
-            confidence.textContent =
-                `Confidence: ${Number(
-                    item.confidence || 0
-                ).toFixed(2)}%`;
-
-
-            const article =
-                document.createElement("p");
-
-            article.textContent =
-                truncateText(
-                    item.article || "",
-                    180
-                );
-
-
-            historyItem.appendChild(
-                title
-            );
-
-            historyItem.appendChild(
-                date
-            );
-
-            historyItem.appendChild(
-                confidence
-            );
-
-            historyItem.appendChild(
-                article
-            );
-
-
-            historyList.appendChild(
-                historyItem
-            );
-
-        }
-    );
-
-}
-
-
-/* =================================
-   CLEAR HISTORY
-================================= */
-
-if (clearHistoryButton) {
-
-    clearHistoryButton.addEventListener(
-        "click",
-        function () {
-
-            analysisHistory = [];
-
-
-            try {
-
-                localStorage.removeItem(
-                    HISTORY_KEY
-                );
-
-            } catch (error) {
-
-                console.error(
-                    "History clear error:",
-                    error
-                );
-
-            }
-
-
-            renderHistory();
-
-        }
-    );
-
-}
-
-
-/* =================================
-   DOWNLOAD BUTTON
-================================= */
-
-function createDownloadButton() {
-
-    if (!resultCard) {
-
-        return;
-
-    }
-
-
-    if (
-        document.getElementById(
-            "downloadReportButton"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    const downloadSection =
-        document.createElement("div");
-
-
-    downloadSection.className =
-        "download-section";
-
-
-    downloadSection.style.marginTop =
-        "20px";
-
-
-    downloadSection.style.textAlign =
-        "center";
-
-
-    const button =
-        document.createElement("button");
-
-
-    button.id =
-        "downloadReportButton";
-
-
-    button.type =
-        "button";
-
-
-    button.className =
-        "download-report-button";
-
-
-    button.textContent =
-        "📄 Download Analysis Report";
-
-
-    button.style.padding =
-        "12px 20px";
-
-
-    button.style.cursor =
-        "pointer";
-
-
-    button.style.border =
-        "no
+```
